@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {Card, CardContent, Grid, Typography, Divider} from "@mui/material";
 import {Link} from "react-router-dom";
 import Login from "./login";
@@ -15,8 +15,6 @@ const backToLogin = <Link to={'/'} className={'link'}>Back to login</Link>
 
 export default function Welcome({match}){
 
-    const [errors, setErrors] = useState({});
-
     return<Grid container columnSpacing={{ xs: 12, sm: 12, md: 12, lg: 12 }}>
         <Grid item lg={4} md={4} sm={3}/>
         <Grid item lg={4} md={4} sm={6} sx={{margin: {lg: "60px 0 50px 0", md: "60px 0 50px 0", sm: "60px 0 50px 0", xs: "0 0 0 0"}}} >
@@ -26,21 +24,9 @@ export default function Welcome({match}){
                         <img src={logo} alt={"logo.svg"} width={"80%"} height={"60px"}/>
                     </Typography>
                     {
-                        (match.path==='/signup'&&<SignUp errors={errors} setErrors={setErrors}/>)||
-                        (match.path==='/forgetPassword'&&<ForgetPassword errors={errors} setErrors={setErrors}/>)||
-                        (match.path==='/'&&<Login errors={errors} setErrors={setErrors}/>)
-                    }
-                </CardContent>
-
-                <CardContent style={{textAlign: "center", color: 'red'}}>
-                    {
-                        (Object.keys(errors).length!==0)&&(
-                            <div>
-                                {
-                                    Object.keys(errors).map(key=><div key={key}>{errors[key]}</div>)
-                                }
-                            </div>
-                        )
+                        (match.path==='/signup'&&<SignUp/>)||
+                        (match.path==='/forgetPassword'&&<ForgetPassword/>)||
+                        (match.path==='/'&&<Login/>)
                     }
                 </CardContent>
 

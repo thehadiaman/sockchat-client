@@ -1,3 +1,7 @@
+body{
+    user-select: none;
+}
+
 .link{
     text-decoration-line: none;
     color: #1082a6;

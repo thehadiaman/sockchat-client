@@ -1,10 +1,21 @@
 import React, {Component} from "react";
-import {TextField} from "@mui/material";
+import {TextField, InputAdornment, Tooltip} from "@mui/material";
 import Joi from "joi-browser";
+import {renderNoneIcon, renderOkIcon} from "../common/svgImages";
 
 class Form extends Component {
 
     state={}
+
+    btnDisabled=()=>{
+        const keys = Object.keys(this.schema);
+        let disabled = false;
+        for(let item of keys){
+            const btnStatus = this.state.inputs.find(input=>input.name===item).btnDisabled;
+            if(btnStatus) disabled = true;
+        }
+        return disabled;
+    }
 
     validateInput=({name, value: data})=>{
         const schema = {[name]: this.schema[name]};
@@ -12,29 +23,38 @@ class Form extends Component {
         return Joi.validate(value, schema);
     }
 
+    filterText=(text)=>{
+        const list = ["`", "~", "!", "#", "$", "%", "^", "&", "*", "(", ")", "", "+", "=", "{", "[", "]", "}", ":", ";", "\"",
+            "'", "|", "\\", "<", ",", ">", "", "?", "/"];
+        for(let item of list){
+            text = text.replace(item, '');
+            text = text.replace(' ', '_');
+        }
+        return text;
+    }
+
     handleChange=({target})=>{
         const {inputs} = this.state;
         const input = inputs.find(input=>input.name===target.name);
         const indexOfInput = inputs.indexOf(input);
         if(['email', 'id', 'username'].indexOf(target.name)!==-1) {
-            target.value = target.value.replace(' ', '_')
+            target.value = this.filterText(target.value);
         }
         input.value = target.value;
         inputs[indexOfInput] = input;
         this.setState({inputs});
         const {error} = this.validateInput(target);
-        let errors = {};
         if(error){
-            errors = {
-                [target.name]: error.details[0].message
-            }
-            this.setState({btnDisabled: true});
+            input.error = error.details[0].message;
+            input.btnDisabled = true;
         }else{
-            if(errors[target.name]) delete errors[target.name];
-            this.setState({btnDisabled: false});
+            input.error = "";
+            input.btnDisabled = false;
         }
-        if(this.props.setErrors)
-            this.props.setErrors(errors);
+        this.setState({inputs});
+        if(!error){
+            this.doChange(target);
+        }
     }
 
     getData=(inputs, keys)=>{
@@ -72,13 +92,22 @@ class Form extends Component {
     renderInput=(inputs, button)=>{
         return <div>
             {inputs.map(input=>{
-                const error = this.props.errors[input.name]?true:false;
                 return<TextField
                     key={input.name}
                     name={input.name}
                     value={input.value}
                     type={input.type}
-                    error={error}
+                    InputProps={['id', 'email', 'username'].includes(input.name)?{
+                        endAdornment: (
+                            <Tooltip title={input.error} arrow={true} open={input.error?true:false}>
+                                <InputAdornment position="end">
+                                    {(input.error?true:false)&&renderNoneIcon()}
+                                    {(input.error===""&&!input.btnDisabled)&&renderOkIcon()}
+                                </InputAdornment>
+                            </Tooltip>
+                        ),
+                    }:null}
+                    error={input.error?true:false}
                     onChange={this.handleChange}
                     style={{marginBottom: '10px'}}
                     label={input.label}
