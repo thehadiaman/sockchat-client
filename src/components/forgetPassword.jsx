@@ -7,22 +7,20 @@ class ForgetPassword extends Form {
 
     state={
         inputs:[
-            {name: 'email', type: 'email', value: '', label: "Email address or username"}
+            {name: 'id', type: 'text', value: '', label: "Email address or username"}
         ],
-        errors: {}
-    }
-
-    getKeys=()=>{
-        return ['email'];
+        errors: {},
+        btnDisabled: true
     }
 
     schema={
-        password: Joi.string().min(6).max(50).required().label('Password')
+        id: Joi.string().min(3).max(50).required().label('Email address of username')
     };
 
     render() {
-        const {inputs} = this.state;
-        const button = <Button type={'submit'} variant={'contained'} fullWidth style={{margin: '0 0 10px 0'}}>Send Login Link</Button>;
+        document.title = "Forget Password";
+        const {inputs, btnDisabled} = this.state;
+        const button = <Button disabled={btnDisabled} type={'submit'} variant={'contained'} fullWidth style={{margin: '0 0 10px 0'}}>Send Login Link</Button>;
         return <form  onSubmit={this.handleSubmit}>
             {this.renderInput(inputs, button)}
         </form>;

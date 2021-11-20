@@ -13,23 +13,20 @@ class SignUp extends Form {
             {name: 'password', type: 'password', value: '', label: "Password"}
         ],
         errors: {},
-        disableSubmit: true
-    }
-
-    getKeys=()=>{
-        return ['email', 'name', 'username', 'password'];
+        btnDisabled: true
     }
 
     schema={
         email: Joi.string().min(8).max(50).required().email().label('Email'),
-        name: Joi.string().min(3).max(50).required().label('Full Name'),
-        username: Joi.string().min(3).max(50).required().label('Username'),
+        name: Joi.string().alphanum().min(3).max(50).required().label('Full Name'),
+        username: Joi.string().alphanum().min(3).max(50).required().label('Username'),
         password: Joi.string().min(6).max(50).required().label('Password'),
     };
 
     render() {
-        const {inputs} = this.state;
-        const button = <Button type={'submit'} variant={'contained'} fullWidth style={{margin: '0 0 10px 0'}}>Signup</Button>;
+        document.title = "Signup";
+        const {inputs, btnDisabled} = this.state;
+        const button = <Button disabled={btnDisabled} type={'submit'} variant={'contained'} fullWidth style={{margin: '0 0 10px 0'}}>Signup</Button>;
         return <form  onSubmit={this.handleSubmit}>
             {this.renderInput(inputs, button)}
         </form>;
