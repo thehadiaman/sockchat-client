@@ -5,7 +5,9 @@ import {renderNoneIcon, renderOkIcon} from "../common/svgImages";
 
 class Form extends Component {
 
-    state={}
+    state={
+        btnDisabled: false
+    }
 
     btnDisabled=()=>{
         const keys = Object.keys(this.schema);
@@ -34,6 +36,7 @@ class Form extends Component {
     }
 
     handleChange=({target})=>{
+        this.props.setError({});
         const {inputs} = this.state;
         const input = inputs.find(input=>input.name===target.name);
         const indexOfInput = inputs.indexOf(input);
@@ -71,6 +74,7 @@ class Form extends Component {
     }
 
     handleSubmit=(e)=>{
+        this.setState({btnDisabled: true});
         e.preventDefault();
 
         const inputs = this.state.inputs;
@@ -85,7 +89,7 @@ class Form extends Component {
             }
         }
         if(!error){
-            console.log("Submitting...");
+            this.doSubmit(data)
         }
     }
 
@@ -97,7 +101,7 @@ class Form extends Component {
                     name={input.name}
                     value={input.value}
                     type={input.type}
-                    InputProps={['id', 'email', 'username'].includes(input.name)?{
+                    InputProps={{
                         endAdornment: (
                             <Tooltip title={input.error} arrow={true} open={input.error?true:false}>
                                 <InputAdornment position="end">
@@ -106,7 +110,7 @@ class Form extends Component {
                                 </InputAdornment>
                             </Tooltip>
                         ),
-                    }:null}
+                    }}
                     error={input.error?true:false}
                     onChange={this.handleChange}
                     style={{marginBottom: '10px'}}

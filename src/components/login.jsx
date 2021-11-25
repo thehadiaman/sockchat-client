@@ -2,6 +2,7 @@ import React from "react";
 import {Button} from "@mui/material";
 import Form from "./common/form";
 import Joi from "joi-browser";
+import {login} from "../services/auth";
 
 class Login extends Form {
 
@@ -19,14 +20,22 @@ class Login extends Form {
         return null;
     }
 
-    doSubmit=()=>{
-        console.log('Login');
+    doSubmit=async(values)=>{
+        try{
+            const data = await login(values);
+            const token = data.headers['x-auth-token'];
+            localStorage.setItem('jwtToken', token);
+            window.location = '/';
+        }catch (ex) {
+            this.props.setError({message: ex.response.data});
+        }
+        this.setState({btnDisabled: false});
     }
 
     render() {
         document.title = "Login";
-        const {inputs} = this.state;
-        const button = <Button type={'submit'} disabled={this.btnDisabled()} variant={'contained'} fullWidth style={{margin: '0 0 10px 0'}}>Login</Button>;
+        const {inputs, btnDisabled} = this.state;
+        const button = <Button type={'submit'} disabled={this.btnDisabled()||btnDisabled} variant={'contained'} fullWidth style={{margin: '0 0 10px 0'}}>Login</Button>;
         return <form onSubmit={this.handleSubmit}>
             {this.renderInput(inputs, button)}
         </form>;

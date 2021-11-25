@@ -9,6 +9,7 @@ function App(){
             <Route exact path={'/'} render={(props)=><Welcome {...props}/>}/>
             <Route exact path={'/signup'} render={(props)=><Welcome {...props}/>}/>
             <Route exact path={'/forgetPassword'} render={(props)=><Welcome {...props}/>}/>
+            <Route exact path={'/verification'} render={(props)=><Welcome {...props}/>}/>
             <Route render={(props)=><div><h1>404</h1></div>}/>
         </Switch>
     );

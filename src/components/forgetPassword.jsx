@@ -19,6 +19,7 @@ class ForgetPassword extends Form {
     doChange=async({name, value})=>{
         const inputs = this.state.inputs;
         const data = (await checkId(value)).data;
+        console.log(data);
         if(!data){
             const input = inputs.find(input=>input.name===name);
             input.btnDisabled = true;
@@ -33,8 +34,8 @@ class ForgetPassword extends Form {
 
     render() {
         document.title = "Forget Password";
-        const {inputs} = this.state;
-        const button = <Button disabled={this.btnDisabled()} type={'submit'} variant={'contained'} fullWidth style={{margin: '0 0 10px 0'}}>Send Login Link</Button>;
+        const {inputs, btnDisabled} = this.state;
+        const button = <Button disabled={this.btnDisabled()||btnDisabled} type={'submit'} variant={'contained'} fullWidth style={{margin: '0 0 10px 0'}}>Send Login Link</Button>;
         return <form  onSubmit={this.handleSubmit}>
             {this.renderInput(inputs, button)}
         </form>;

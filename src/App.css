@@ -1,5 +1,6 @@
 body{
     user-select: none;
+    font-family: AnjaliOldLipi, serif;
 }
 
 .link{
@@ -9,4 +10,18 @@ body{
 
 .MuiCard-root{
     border: 1px solid #eaeaea;
+}
+
+.welcome-page-error-message{
+    color: #b62525;
+    text-align: center;
+}
+
+.center{
+    text-align: center;
+}
+
+.custom-link{
+    color: #4545c7;
+    cursor: pointer;
 }

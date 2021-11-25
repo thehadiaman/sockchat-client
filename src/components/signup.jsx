@@ -2,7 +2,7 @@ import React from "react";
 import {Button} from "@mui/material";
 import Form from "./common/form";
 import Joi from "joi-browser";
-import {checkId} from "../services/userService";
+import {checkId, signup} from "../services/userService";
 
 class SignUp extends Form {
 
@@ -35,14 +35,22 @@ class SignUp extends Form {
         }
     }
 
-    doSubmit=()=>{
-        console.log('SignUp');
+    doSubmit=async(values)=>{
+        try{
+            const data = await signup(values);
+            const token = data.headers['x-auth-token'];
+            localStorage.setItem('jwtToken', token);
+            document.location='/verification'
+        }catch (ex) {
+            this.props.setError({message: ex.response.data});
+        }
+        this.setState({btnDisabled: false});
     }
 
     render() {
         document.title = "Signup";
-        const {inputs} = this.state;
-        const button = <Button disabled={this.btnDisabled()} type={'submit'} variant={'contained'} fullWidth style={{margin: '0 0 10px 0'}}>Signup</Button>;
+        const {inputs, btnDisabled} = this.state;
+        const button = <Button disabled={this.btnDisabled()||btnDisabled} type={'submit'} variant={'contained'} fullWidth style={{margin: '0 0 10px 0'}}>Signup</Button>;
         return <form  onSubmit={this.handleSubmit}>
             {this.renderInput(inputs, button)}
         </form>;
