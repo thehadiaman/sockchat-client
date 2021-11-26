@@ -9,6 +9,7 @@ class Login extends Form {
     state={
         inputs:[{name: 'id', type: 'text', value: '', label: "Email address or username", error: "", btnDisabled: true},
             {name: 'password', type: 'password', value: '', label: "Password", error: "", btnDisabled: true}],
+        snackMessage: null
     }
 
     schema={
@@ -27,7 +28,7 @@ class Login extends Form {
             localStorage.setItem('jwtToken', token);
             window.location = '/';
         }catch (ex) {
-            this.props.setError({message: ex.response.data});
+            this.setState({snackMessage: ex.response.data});
         }
         this.setState({btnDisabled: false});
     }

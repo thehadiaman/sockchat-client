@@ -2,14 +2,15 @@ import React from "react";
 import {Button} from "@mui/material";
 import Form from "./common/form";
 import Joi from "joi-browser";
-import {checkId} from "../services/userService";
+import {checkId, generateResetPasswordLink} from "../services/userService";
 
 class ForgetPassword extends Form {
 
     state={
         inputs:[
             {name: 'id', type: 'text', value: '', label: "Email address or username", error: "", btnDisabled: true}
-        ]
+        ],
+        snackMessage: null
     }
 
     schema={
@@ -19,7 +20,6 @@ class ForgetPassword extends Form {
     doChange=async({name, value})=>{
         const inputs = this.state.inputs;
         const data = (await checkId(value)).data;
-        console.log(data);
         if(!data){
             const input = inputs.find(input=>input.name===name);
             input.btnDisabled = true;
@@ -28,8 +28,13 @@ class ForgetPassword extends Form {
         }
     }
 
-    doSubmit=()=>{
-        console.log('ForgetPassword');
+    doSubmit=async(values)=>{
+        try{
+            const data = (await generateResetPasswordLink(values)).data;
+            this.setState({snackMessage: data});
+        }catch (ex) {
+            this.setState({snackMessage: ex.response.data});
+        }
     }
 
     render() {

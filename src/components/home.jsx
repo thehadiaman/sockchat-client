@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {Card, CardContent, Grid, Typography, Divider} from "@mui/material";
 import {Link} from "react-router-dom";
 import Login from "./login";
@@ -17,7 +17,6 @@ const verificationText = <b>Enter valid verification code, only have 10 chances 
 
 
 export default function Welcome(props){
-    const [error, setError] = useState({});
     const {match} = props;
 
     return<Grid container columnSpacing={{ xs: 12, sm: 12, md: 12, lg: 12 }}>
@@ -29,19 +28,13 @@ export default function Welcome(props){
                         <img src={logo} alt={"logo.svg"} width={"80%"} height={"60px"}/>
                     </Typography>
                     {
-                        (match.path==='/signup'&&<SignUp {...props} setError={setError}/>)||
-                        (match.path==='/forgetPassword'&&<ForgetPassword {...props} setError={setError}/>)||
-                        (match.path==='/verification'&&<Verification {...props} setError={setError}/>)||
-                        (match.path==='/'&&<Login {...props} setError={setError}/>)
+                        (match.path==='/signup'&&<SignUp {...props}/>)||
+                        (match.path==='/forgetPassword'&&<ForgetPassword {...props}/>)||
+                        (match.path==='/verification'&&<Verification {...props}/>)||
+                        (match.path==='/'&&<Login {...props}/>)
                     }
                 </CardContent>
                 <Divider/>
-
-                {error.message&&<CardContent className={'welcome-page-error-message'}>
-                    {
-                        error.message
-                    }
-                </CardContent>}
 
                 <CardContent style={{textAlign: "center"}}>
                     {

@@ -2,11 +2,13 @@ import React, {Component} from "react";
 import {TextField, InputAdornment, Tooltip} from "@mui/material";
 import Joi from "joi-browser";
 import {renderNoneIcon, renderOkIcon} from "../common/svgImages";
+import SimpleSnackbar from "./snackbar";
 
 class Form extends Component {
 
     state={
-        btnDisabled: false
+        btnDisabled: false,
+        snackMessage: null
     }
 
     btnDisabled=()=>{
@@ -36,7 +38,7 @@ class Form extends Component {
     }
 
     handleChange=({target})=>{
-        this.props.setError({});
+        this.setState({snackMessage: null});
         const {inputs} = this.state;
         const input = inputs.find(input=>input.name===target.name);
         const indexOfInput = inputs.indexOf(input);
@@ -85,12 +87,18 @@ class Form extends Component {
         const {error} = this.validate(data, schema);
         if(error){
             for(let item of error.details){
-                console.log(item.message);
+                this.setState({snackMessage: item.message});
             }
+            return;
         }
         if(!error){
             this.doSubmit(data)
         }
+    }
+
+    closeSnackMessage=()=>{
+        const snackMessage = null;
+        this.setState({snackMessage});
     }
 
     renderInput=(inputs, button)=>{
@@ -101,6 +109,7 @@ class Form extends Component {
                     name={input.name}
                     value={input.value}
                     type={input.type}
+                    required={true}
                     InputProps={{
                         endAdornment: (
                             <Tooltip title={input.error} arrow={true} open={input.error?true:false}>
@@ -119,6 +128,7 @@ class Form extends Component {
                 />
             })}
             {button}
+            <SimpleSnackbar message={this.state.snackMessage} closeSnackMessage={this.closeSnackMessage}/>
         </div>
     }
 }

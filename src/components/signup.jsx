@@ -42,7 +42,7 @@ class SignUp extends Form {
             localStorage.setItem('jwtToken', token);
             document.location='/verification'
         }catch (ex) {
-            this.props.setError({message: ex.response.data});
+            this.setState({snackMessage: ex.response.data});
         }
         this.setState({btnDisabled: false});
     }

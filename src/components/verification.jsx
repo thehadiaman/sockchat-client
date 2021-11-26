@@ -39,7 +39,6 @@ class Verification extends Form {
         try{
             const data = (await resendVerificationCode()).data;
             const snackMessage = data;
-            console.log(data);
             this.setState({snackMessage});
         }catch (ex) {
             console.log(ex);
@@ -55,10 +54,10 @@ class Verification extends Form {
         document.title = "Email verification";
         const {inputs, btnDisabled, snackMessage} = this.state;
         const button = <Grid container columnSpacing={{ xs: 12, sm: 12, md: 12, lg: 12 }}>
-            <Grid item lg={12} md={12} sm={12}>
+            <Grid item lg={12} md={12} sm={12} xs={12}>
                 <Button disabled={this.btnDisabled()||btnDisabled} type={'submit'} variant={'contained'} fullWidth style={{margin: '0 0 10px 0'}}>Submit</Button>
             </Grid>
-            <Grid item lg={12} md={12} sm={12}>
+            <Grid item lg={12} md={12} sm={12} xs={12}>
                 <div className={"center"}>Didn't receive email verification code? <div className={'custom-link'} onClick={()=>this.getEmailVerificationCode()}>Send Verification Code</div></div>
             </Grid>
             <SimpleSnackbar message={snackMessage} closeSnackMessage={this.closeSnackMessage}/>
