@@ -30,3 +30,7 @@ export function validatePasswordResetLink(token){
 export function resetPassword(body, token){
     return http.put(`${apiEndPoint}/resetPassword?token=${token}`, body);
 }
+
+export function authUser(){
+    return http.get(`${apiEndPoint}/me`);
+}

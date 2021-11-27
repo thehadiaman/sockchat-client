@@ -1,10 +1,37 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {Route, Switch } from 'react-router-dom';
 import './App.css';
 import Welcome from "./components/home";
 import ResetPassword from "./components/resetPassword";
+import {authUser} from "./services/userService";
 
 function App(){
+
+    const [user, setUser] = useState({});
+    const [load, setLoad] = useState(false);
+
+    useEffect(() => {
+        async function auth(){
+            try {
+                const jwt = localStorage.getItem('jwtToken');
+                const user = (await authUser()).data;
+                if (jwt !== null) setUser(user);
+            } catch (ex){
+                localStorage.removeItem('jwtToken');
+            }
+            setLoad(true);
+        }
+        auth();
+    }, []);
+
+    if(!load){
+        return <div>Loading</div>;
+    }
+
+    if(user.name){
+        return <div>Login succeed</div>;
+    }
+
     return(
         <Switch>
             <Route exact path={'/'} render={(props)=><Welcome {...props}/>}/>
