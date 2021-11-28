@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {Route, Switch } from 'react-router-dom';
 import './App.css';
-import Welcome from "./components/home";
+import Welcome from "./components/welcomePage/welcome";
 import ResetPassword from "./components/resetPassword";
 import {authUser} from "./services/userService";
+import LoadePage from "./components/loadingPage/loadePage";
 
 function App(){
 
@@ -19,13 +20,13 @@ function App(){
             } catch (ex){
                 localStorage.removeItem('jwtToken');
             }
-            setLoad(true);
+            setLoad(true)
         }
         auth();
     }, []);
 
     if(!load){
-        return <div>Loading</div>;
+        return <LoadePage/>;
     }
 
     if(user.name){

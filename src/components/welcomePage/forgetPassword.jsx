@@ -1,8 +1,8 @@
 import React from "react";
 import {Button} from "@mui/material";
-import Form from "./common/form";
+import Form from "../common/form";
 import Joi from "joi-browser";
-import {checkId, generateResetPasswordLink} from "../services/userService";
+import {checkId, generateResetPasswordLink} from "../../services/userService";
 
 class ForgetPassword extends Form {
 

@@ -1,8 +1,8 @@
 import React from "react";
 import {Button} from "@mui/material";
-import Form from "./common/form";
+import Form from "../common/form";
 import Joi from "joi-browser";
-import {checkId, signup} from "../services/userService";
+import {checkId, signup} from "../../services/userService";
 
 class SignUp extends Form {
 

@@ -4,8 +4,8 @@ import {Link} from "react-router-dom";
 import Login from "./login";
 import SignUp from "./signup";
 import ForgetPassword from "./forgetPassword";
-import Verification from "./verification";
-import logo from "./images/logo.png";
+import Verification from "../verification";
+import logo from "../images/logo.png";
 
 const forgetPasswordLink = <Link to={'/forgetPassword'} className={'link'}>Forget your password?</Link>;
 const signUpLink = <div>Don't you have an account? <Link to={'/signup'} className={'link'}> Sign up</Link></div>;
