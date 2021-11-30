@@ -79,6 +79,16 @@ export default function TopNavBar({user}) {
         </Box>
     );
 
+    const userLoginTrueVerificationFalse = (
+        <Box sx={{ display: { xs: 'none', md: 'flex', sm: 'flex', lg: 'flex' }, position: 'absolute', right: '-10px' }}>
+            <IconButton>
+                <AccountCircle sx={{fontSize: 'larger'}}/>
+            </IconButton>
+        </Box>
+    );
+
+
+
     const userLoginFalse = (
         <Box sx={{ display: { xs: 'none', md: 'flex', sm: 'flex', lg: 'flex' }, position: 'absolute', right: '-10px' }}>
             <Button disableRipple variant={'contained'} onClick={()=>history.push('/')}>Login</Button><Button disableRipple onClick={()=>history.push('/signup')}>SignUp</Button>
@@ -95,17 +105,23 @@ export default function TopNavBar({user}) {
                         <img className={'title-image'} onClick={()=>history.push('/')} src={logo} alt="Logo" width={'70px'} height={'20px'}/>
                     </Box>
                     <Box sx={{ flexGrow: 1 }} />
-                    <Search>
-                        <SearchIconWrapper>
-                            <SearchIcon />
-                        </SearchIconWrapper>
-                        <StyledInputBase
-                            placeholder="Search…"
-                        />
-                    </Search>
+                    {
+                        (!(user.name&&!user.verification.verified)&&(
+                            <Search>
+                                <SearchIconWrapper>
+                                    <SearchIcon />
+                                </SearchIconWrapper>
+                                <StyledInputBase
+                                    placeholder="Search…"
+                                />
+                            </Search>
+                        ))
+                    }
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', sm: 'flex', lg: 'flex' } }} />
                     {
-                        user.name?userLoginTrue:userLoginFalse
+                        ((user.name&&user.verification.verified)&&userLoginTrue) ||
+                        ((user.name&&!user.verification.verified)&&userLoginTrueVerificationFalse) ||
+                        userLoginFalse
                     }
                 </Toolbar>
             </Container>

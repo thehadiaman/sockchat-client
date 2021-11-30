@@ -35,3 +35,16 @@ img {
 .title-image{
     cursor: pointer;
 }
+
+.status-container{
+    display: flex;
+    overflow-x: auto;
+    overflow-y: hidden;
+    scrollbar-width: none;
+}
+
+.status-container::-webkit-scrollbar{
+    display: none;
+    overflow: -moz-scrollbars-none;
+    -ms-overflow-style: none;
+}

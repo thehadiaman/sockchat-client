@@ -6,6 +6,7 @@ import ResetPassword from "./components/resetPassword";
 import {authUser} from "./services/userService";
 import LoadePage from "./components/loadingPage/loadePage";
 import Profile from "./components/profile";
+import Home from "./components/home";
 import NotFound from "./components/notFound";
 import TopNavBar from "./components/topNavBar";
 import BottomNavBar from "./components/bottomNavBar";
@@ -38,7 +39,8 @@ function App(){
             <TopNavBar user={user}/>
             <Switch>
                 <Route exact path={'/verification'} render={(props)=><Welcome {...props}/>}/>
-                <Route exact path={'/'} render={(props)=><Profile user={user} {...props}/>}/>
+                <Route exact path={'/profile'} render={(props)=><Profile user={user} {...props}/>}/>
+                <Route exact path={'/'} render={(props)=><Home user={user} {...props}/>}/>
                 <Route render={(props)=><NotFound/>}/>
             </Switch>
             <BottomNavBar/>

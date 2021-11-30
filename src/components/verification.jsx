@@ -27,7 +27,7 @@ class Verification extends Form {
             const data = await emailVerification(values);
             const token = data.headers['x-auth-token'];
             localStorage.setItem('jwtToken', token);
-            this.props.history.replace('/');
+            window.location = '/';
             return;
         }catch (ex) {
             this.props.setError({message: ex.response.data});
