@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {Avatar, ButtonGroup, Divider, IconButton, styled} from "@mui/material";
-import {Settings} from "@mui/icons-material";
+import {renderSettingsIcon} from "../components/common/svgImages";
 
 class Profile extends Component {
     render() {
@@ -53,7 +53,7 @@ class Profile extends Component {
         return (
             <center>
                 <ProfileImage/>
-                <span style={userNameStyle}>{username}<IconButton><Settings/></IconButton></span>
+                <span style={userNameStyle}>{username}<IconButton>{renderSettingsIcon()}</IconButton></span>
                 <br/>
                 <ButtonGroup disableRipple disableElevation sx={{ display: { xs: 'none', lg: 'inline-flex', xl: 'none' } }}>
                     <BtnValue value={"0"}/> <Btn title={"Posts"}/>

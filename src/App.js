@@ -6,7 +6,7 @@ import ResetPassword from "./components/resetPassword";
 import {authUser} from "./services/userService";
 import LoadePage from "./components/loadingPage/loadePage";
 import Profile from "./components/profile";
-import Home from "./components/home";
+import Home from "./components/home/home";
 import NotFound from "./components/notFound";
 import TopNavBar from "./components/topNavBar";
 import BottomNavBar from "./components/bottomNavBar";

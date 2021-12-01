@@ -2,9 +2,7 @@ import React from "react";
 import {Card, CardContent, Typography, Avatar, styled, Badge, IconButton} from '@mui/material';
 import {Add} from '@mui/icons-material';
 
-export default function Home({user}) {
-
-    document.title = 'SockChat';
+export default function StatusBar({user}) {
 
     const Username = styled((props)=>(
         <Typography {...props}>{props.value}</Typography>
@@ -37,38 +35,38 @@ export default function Home({user}) {
                                     <SmallAvatar variant={'contained'}><Add/></SmallAvatar>
                                 }
                             >
-                                <Avatar src="https://picsum.photos/51"/>
+                                <Avatar src="https://picsum.photos/50"/>
                             </Badge>
                             <Username value={user.username}/>
                         </center>
                     </div>
                     <div style={{margin: '0 10px 0 10px'}}>
                         <center>
-                            <Avatar src="https://picsum.photos/52"/>
+                            <Avatar src="https://picsum.photos/50"/>
                             <Username value={user.username}/>
                         </center>
                     </div>
                     <div style={{margin: '0 10px 0 10px'}}>
                         <center>
-                            <Avatar src="https://picsum.photos/53"/>
+                            <Avatar src="https://picsum.photos/50"/>
                             <Username value={user.username}/>
                         </center>
                     </div>
                     <div style={{margin: '0 10px 0 10px'}}>
                         <center>
-                            <Avatar src="https://picsum.photos/54"/>
+                            <Avatar src="https://picsum.photos/50"/>
                             <Username value={user.username}/>
                         </center>
                     </div>
                     <div style={{margin: '0 10px 0 10px'}}>
                         <center>
-                            <Avatar src="https://picsum.photos/55"/>
+                            <Avatar src="https://picsum.photos/50"/>
                             <Username value={user.username}/>
                         </center>
                     </div>
                     <div style={{margin: '0 10px 0 10px'}}>
                         <center>
-                            <Avatar src="https://picsum.photos/56"/>
+                            <Avatar src="https://picsum.photos/50"/>
                             <Username value={user.username}/>
                         </center>
                     </div>

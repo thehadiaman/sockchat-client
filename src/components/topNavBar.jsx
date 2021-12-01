@@ -1,10 +1,12 @@
 import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import {AppBar, Container, Button, Box, Toolbar, IconButton, InputBase, Badge} from '@mui/material';
-import {Home, AccountCircle, Search as SearchIcon, Mail as MailIcon} from '@mui/icons-material';
-import {Notifications as NotificationsIcon} from '@mui/icons-material';
+import {AccountCircle, Search as SearchIcon} from '@mui/icons-material';
+import {Logout as LogoutIcon, PersonOutline as AccountCircleIcon} from '@mui/icons-material';
 import logo from "./images/logo.png";
 import { useHistory } from "react-router-dom";
+import {renderHomeIcon, renderMessageIcon, renderNotificationIcon, renderSettingsIcon} from "../components/common/svgImages";
+import DropDownMenu from "./common/dropDownMenu.jsx";
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -54,28 +56,31 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
     },
 }));
 
+function logout(){
+    localStorage.removeItem('jwtToken');
+    window.location = '/';
+}
+
 export default function TopNavBar({user}) {
 
     const history = useHistory();
 
+    const notificationData = [{text: 'Notification One'}, {text: 'Notification Two'}, {text: 'Notification Three'}, {text: 'Notification Four'}];
+
+    const profileMenu = [{text: 'Profile', icon: <AccountCircleIcon/>, link: '/profile'}, {text: 'Settings', icon: renderSettingsIcon(), link: 'Settings'}, {text: 'Logout', icon: <LogoutIcon/>, fn: ()=>logout()}]
+
     const userLoginTrue = (
         <Box sx={{ display: { xs: 'none', md: 'flex', sm: 'flex', lg: 'flex' }, position: 'absolute', right: '-10px' }}>
-            <IconButton>
-                <Home sx={{fontSize: 'larger'}}/>
+            <IconButton onClick={()=>history.push('/')}>
+                {renderHomeIcon()}
             </IconButton>
             <IconButton>
                 <Badge badgeContent={4} color="error">
-                    <MailIcon  sx={{fontSize: 'larger'}}/>
+                    {renderMessageIcon()}
                 </Badge>
             </IconButton>
-            <IconButton>
-                <Badge badgeContent={17} color="error">
-                    <NotificationsIcon  sx={{fontSize: 'larger'}}/>
-                </Badge>
-            </IconButton>
-            <IconButton>
-                <AccountCircle sx={{fontSize: 'larger'}}/>
-            </IconButton>
+            <DropDownMenu badgeText={5} title={"Notification"} icon={renderNotificationIcon()} menu={notificationData} />
+            <DropDownMenu title={user.name} icon={<AccountCircle sx={{fontSize: 'larger'}}/>} menu={profileMenu} />
         </Box>
     );
 
@@ -86,8 +91,6 @@ export default function TopNavBar({user}) {
             </IconButton>
         </Box>
     );
-
-
 
     const userLoginFalse = (
         <Box sx={{ display: { xs: 'none', md: 'flex', sm: 'flex', lg: 'flex' }, position: 'absolute', right: '-10px' }}>
