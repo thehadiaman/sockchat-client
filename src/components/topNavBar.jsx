@@ -16,7 +16,7 @@ const Search = styled('div')(({ theme }) => ({
     color: '#000000',
     marginLeft: 0,
     width: '85%',
-    [theme.breakpoints.up('sm')]: {
+    [theme.breakpoints.up('md')]: {
         width: '40%',
     },
 }));
@@ -69,7 +69,7 @@ export default function TopNavBar({user}) {
     const profileMenu = [{text: 'Profile', icon: renderProfileIcon(), link: '/profile'}, {text: 'Settings', icon: renderSettingsIcon(), link: 'Settings'}, {text: 'Logout', icon: renderLogoutIcon(), fn: ()=>logout()}]
 
     const userLoginTrue = (
-        <Box sx={{ display: { xs: 'none', md: 'flex', sm: 'flex', lg: 'flex' }, position: 'absolute', right: '-10px' }}>
+        <Box sx={{ display: { xs: 'none', md: 'flex', sm: 'none', lg: 'flex' }, position: 'absolute', right: '-10px' }}>
             <IconButton onClick={()=>history.push('/')}>
                 {renderHomeIcon()}
             </IconButton>
