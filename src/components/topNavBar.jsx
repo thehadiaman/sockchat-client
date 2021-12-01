@@ -2,10 +2,9 @@ import * as React from 'react';
 import { styled, alpha } from '@mui/material/styles';
 import {AppBar, Container, Button, Box, Toolbar, IconButton, InputBase, Badge} from '@mui/material';
 import {AccountCircle, Search as SearchIcon} from '@mui/icons-material';
-import {Logout as LogoutIcon, PersonOutline as AccountCircleIcon} from '@mui/icons-material';
 import logo from "./images/logo.png";
 import { useHistory } from "react-router-dom";
-import {renderHomeIcon, renderMessageIcon, renderNotificationIcon, renderSettingsIcon} from "../components/common/svgImages";
+import {renderHomeIcon, renderMessageIcon, renderNotificationIcon, renderSettingsIcon, renderProfileIcon, renderLogoutIcon} from "../components/common/svgImages";
 import DropDownMenu from "./common/dropDownMenu.jsx";
 
 const Search = styled('div')(({ theme }) => ({
@@ -67,7 +66,7 @@ export default function TopNavBar({user}) {
 
     const notificationData = [{text: 'Notification One'}, {text: 'Notification Two'}, {text: 'Notification Three'}, {text: 'Notification Four'}];
 
-    const profileMenu = [{text: 'Profile', icon: <AccountCircleIcon/>, link: '/profile'}, {text: 'Settings', icon: renderSettingsIcon(), link: 'Settings'}, {text: 'Logout', icon: <LogoutIcon/>, fn: ()=>logout()}]
+    const profileMenu = [{text: 'Profile', icon: renderProfileIcon(), link: '/profile'}, {text: 'Settings', icon: renderSettingsIcon(), link: 'Settings'}, {text: 'Logout', icon: renderLogoutIcon(), fn: ()=>logout()}]
 
     const userLoginTrue = (
         <Box sx={{ display: { xs: 'none', md: 'flex', sm: 'flex', lg: 'flex' }, position: 'absolute', right: '-10px' }}>

@@ -57,12 +57,11 @@ export default function DropDownMenu({title, icon, menu, badgeText}){
                 transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
-                <Menu >Notification</Menu>
-                {menu.map(m=><MenuItem key={m.text}>
+                {menu.map(m=><MenuItem onClick={m.fn?m.fn:()=>history.push(m.link)} key={m.text}>
                     {m.icon&&<ListItemIcon>
                         {m.icon}
                     </ListItemIcon>}
-                        <span onClick={m.fn?m.fn:()=>history.push(m.link)}>{m.text}</span>
+                        <span>{m.text}</span>
                     </MenuItem>)}
             </Menu>
         </React.Fragment>

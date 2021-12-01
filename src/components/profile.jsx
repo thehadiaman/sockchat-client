@@ -1,6 +1,7 @@
 import React, {Component} from "react";
-import {Avatar, ButtonGroup, Divider, IconButton, styled} from "@mui/material";
+import {Avatar, ButtonGroup, Divider, styled} from "@mui/material";
 import {renderSettingsIcon} from "../components/common/svgImages";
+import PopupList from "./common/popupList";
 
 class Profile extends Component {
     render() {
@@ -14,6 +15,12 @@ class Profile extends Component {
                 height: '7rem'
             }
         }))
+
+        const logout = ()=>{
+            localStorage.removeItem('jwtToken');
+            window.location = '/';
+        }
+
 
         const userNameStyle={
             fontFamily: 'Bitstream Vera Sans Mono',
@@ -50,10 +57,12 @@ class Profile extends Component {
 
         document.title = `${name} (@${username})`;
 
+        const profileMenu = [{text: 'Profile', link: '/profile'}, {text: 'Settings', link: 'Settings'}, {text: 'Logout', fn: ()=>logout()}]
+
         return (
             <center>
                 <ProfileImage/>
-                <span style={userNameStyle}>{username}<IconButton>{renderSettingsIcon()}</IconButton></span>
+                <span style={userNameStyle}>{username}<PopupList menu={profileMenu} LaunchButton={renderSettingsIcon()}/></span>
                 <br/>
                 <ButtonGroup disableRipple disableElevation sx={{ display: { xs: 'none', lg: 'inline-flex', xl: 'none' } }}>
                     <BtnValue value={"0"}/> <Btn title={"Posts"}/>
