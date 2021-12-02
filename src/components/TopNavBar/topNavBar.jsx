@@ -1,59 +1,11 @@
-import * as React from 'react';
-import { styled, alpha } from '@mui/material/styles';
-import {AppBar, Container, Button, Box, Toolbar, IconButton, InputBase, Badge} from '@mui/material';
-import {AccountCircle, Search as SearchIcon} from '@mui/icons-material';
-import logo from "./images/logo.png";
+import React, {useState} from 'react';
+import {AppBar, Container, Button, Box, Toolbar, IconButton, Badge} from '@mui/material';
+import {AccountCircle} from '@mui/icons-material';
+import logo from "../images/logo.png";
 import { useHistory } from "react-router-dom";
-import {renderHomeIcon, renderMessageIcon, renderNotificationIcon, renderSettingsIcon, renderProfileIcon, renderLogoutIcon} from "../components/common/svgImages";
-import DropDownMenu from "./common/dropDownMenu.jsx";
-
-const Search = styled('div')(({ theme }) => ({
-    position: 'relative',
-    borderRadius: theme.shape.borderRadius,
-    border: '1px solid #dddddd',
-    backgroundColor: alpha(theme.palette.common.white, 0.15),
-    marginRight: theme.spacing(2),
-    color: '#000000',
-    marginLeft: 0,
-    width: '85%',
-    [theme.breakpoints.up('md')]: {
-        width: '40%',
-    },
-}));
-
-const SearchIconWrapper = styled('div')(({ theme }) => ({
-    padding: theme.spacing(0, 2),
-    height: '100%',
-    color: '#000000',
-    position: 'absolute',
-    pointerEvents: 'none',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-    width: '100%',
-    color: '#000000',
-    '& .MuiInputBase-input': {
-
-        paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-        transition: theme.transitions.create('width'),
-
-        [theme.breakpoints.up('md')]: {
-            width: '100%',
-        },
-        [theme.breakpoints.up('sm')]: {
-            width: '100%',
-        },
-        [theme.breakpoints.up('xs')]: {
-            width: '100%',
-        },
-        [theme.breakpoints.up('lg')]: {
-            width: '100%',
-        },
-    },
-}));
+import {renderHomeIcon, renderMessageIcon, renderNotificationIcon, renderSettingsIcon, renderProfileIcon, renderLogoutIcon} from "../common/svgImages";
+import SearchBar from "./search";
+import Pop from "../common/popover";
 
 function logout(){
     localStorage.removeItem('jwtToken');
@@ -61,11 +13,24 @@ function logout(){
 }
 
 export default function TopNavBar({user}) {
-
     const history = useHistory();
+    const [dropDownStatus, setDropDownStatus] = useState({
+        title: '',
+        open: false,
+        target: null
+    });
+
+    const openDropDownMenu = (target, title)=>{
+        const status = {title, open: true, target};
+        setDropDownStatus(status);
+    }
+
+    const closeDropDownMenu = ()=>{
+        const status = {title: '', open: false, target: null};
+        setDropDownStatus(status);
+    }
 
     const notificationData = [{text: 'Notification One'}, {text: 'Notification Two'}, {text: 'Notification Three'}, {text: 'Notification Four'}];
-
     const profileMenu = [{text: 'Profile', icon: renderProfileIcon(), link: '/profile'}, {text: 'Settings', icon: renderSettingsIcon(), link: 'Settings'}, {text: 'Logout', icon: renderLogoutIcon(), fn: ()=>logout()}]
 
     const userLoginTrue = (
@@ -78,8 +43,21 @@ export default function TopNavBar({user}) {
                     {renderMessageIcon()}
                 </Badge>
             </IconButton>
-            <DropDownMenu badgeText={5} title={"Notification"} icon={renderNotificationIcon()} menu={notificationData} />
-            <DropDownMenu title={user.name} icon={<AccountCircle sx={{fontSize: 'larger'}}/>} menu={profileMenu} />
+
+            <IconButton size={"medium"} onClick={({target})=>openDropDownMenu(target, "Notifications")}>
+                <Badge color="error">
+                    {renderNotificationIcon()}
+                </Badge>
+            </IconButton>
+
+            <IconButton size={"medium"} onClick={({target})=>openDropDownMenu(target, "Profile")}>
+                <Badge color="error">
+                    <AccountCircle sx={{fontSize: 'larger'}}/>
+                </Badge>
+            </IconButton>
+
+            {dropDownStatus.open&&<Pop {...dropDownStatus} closeDropDownMenu={closeDropDownMenu}/>}
+
         </Box>
     );
 
@@ -109,14 +87,7 @@ export default function TopNavBar({user}) {
                     <Box sx={{ flexGrow: 1 }} />
                     {
                         (!(user.name&&!user.verification.verified)&&(
-                            <Search>
-                                <SearchIconWrapper>
-                                    <SearchIcon />
-                                </SearchIconWrapper>
-                                <StyledInputBase
-                                    placeholder="Search…"
-                                />
-                            </Search>
+                            <SearchBar/>
                         ))
                     }
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', sm: 'flex', lg: 'flex' } }} />

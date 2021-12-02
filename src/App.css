@@ -5,6 +5,10 @@ body{
     margin: 0;
 }
 
+.cursor-pointer {
+    cursor: pointer;
+}
+
 img {
     -webkit-user-drag: none;
 }
@@ -48,3 +52,4 @@ img {
     overflow: -moz-scrollbars-none;
     -ms-overflow-style: none;
 }
+

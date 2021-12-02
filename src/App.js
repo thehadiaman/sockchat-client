@@ -8,8 +8,10 @@ import LoadePage from "./components/loadingPage/loadePage";
 import Profile from "./components/profile";
 import Home from "./components/home/home";
 import NotFound from "./components/notFound";
-import TopNavBar from "./components/topNavBar";
+import TopNavBar from "./components/TopNavBar/topNavBar";
 import BottomNavBar from "./components/bottomNavBar";
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 function App(){
 
