@@ -16,7 +16,7 @@ export default function Profile({user}){
     const ProfileImage = styled((props) => (
         <Avatar {...props} />
     ))(() => ({
-        padding: '3rem',
+        padding: '4rem',
         '& .MuiAvatar-fallback': {
             width: '7rem',
             height: '7rem'

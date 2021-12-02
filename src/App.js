@@ -27,7 +27,7 @@ function App(){
             } catch (ex){
                 localStorage.removeItem('jwtToken');
             }
-            setLoad(true)
+            setTimeout(()=>setLoad(true), 5000)
         }
         auth();
     }, []);

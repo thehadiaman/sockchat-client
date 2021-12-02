@@ -1,7 +1,7 @@
 import React from "react";
 import { Overlay, Popover } from 'react-bootstrap';
 
-export default function Pop({title, open, target, closeDropDownMenu}) {
+export default function Pop({title, open, target, closeDropDownMenu, content, width}) {
     return (
         <Overlay
             show={open}
@@ -13,15 +13,9 @@ export default function Pop({title, open, target, closeDropDownMenu}) {
             rootCloseEvent={'click'}
             arrowProps={{style: {backgroundColor: '#000000'}}}
         >
-            <Popover id="popover-contained" >
-                <Popover.Header as="h3" style={{backgroundColor: '#dddddd'}}>{title}</Popover.Header>
-                <Popover.Body>
-                    <li>ONE</li>
-                    <li>TWO</li>
-                    <li>THREE</li>
-                    <li>FOUR</li>
-                    <li>FIVE</li>
-                </Popover.Body>
+            <Popover style={{borderRadius: '0', width: width||"100%"}}>
+                {title&&<Popover.Header as={"h6"} className={"popover-title"}>{title}</Popover.Header>}
+                {content}
             </Popover>
         </Overlay>
     );

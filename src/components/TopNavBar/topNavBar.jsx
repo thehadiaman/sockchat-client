@@ -6,6 +6,7 @@ import { useHistory } from "react-router-dom";
 import {renderHomeIcon, renderMessageIcon, renderNotificationIcon, renderSettingsIcon, renderProfileIcon, renderLogoutIcon} from "../common/svgImages";
 import SearchBar from "./search";
 import Pop from "../common/popover";
+import List from "../common/list";
 
 function logout(){
     localStorage.removeItem('jwtToken');
@@ -15,18 +16,20 @@ function logout(){
 export default function TopNavBar({user}) {
     const history = useHistory();
     const [dropDownStatus, setDropDownStatus] = useState({
-        title: '',
         open: false,
-        target: null
+        target: null,
+        content: null,
+        title: null
     });
 
-    const openDropDownMenu = (target, title)=>{
-        const status = {title, open: true, target};
+    const openDropDownMenu = (target, menu, title=null)=>{
+        const content = <List menu={menu}/>
+        const status = {open: true, target, content, title};
         setDropDownStatus(status);
     }
 
     const closeDropDownMenu = ()=>{
-        const status = {title: '', open: false, target: null};
+        const status = {open: false, target: null, content: null, title: null};
         setDropDownStatus(status);
     }
 
@@ -39,24 +42,22 @@ export default function TopNavBar({user}) {
                 {renderHomeIcon()}
             </IconButton>
             <IconButton>
-                <Badge badgeContent={4} color="error">
+                <Badge badgeContent={3} color="error">
                     {renderMessageIcon()}
                 </Badge>
             </IconButton>
 
-            <IconButton size={"medium"} onClick={({target})=>openDropDownMenu(target, "Notifications")}>
-                <Badge color="error">
+            <IconButton size={"medium"} onClick={({target})=>openDropDownMenu(target, notificationData, "Notifications")}>
+                <Badge badgeContent={5} color="error">
                     {renderNotificationIcon()}
                 </Badge>
             </IconButton>
 
-            <IconButton size={"medium"} onClick={({target})=>openDropDownMenu(target, "Profile")}>
-                <Badge color="error">
+            <IconButton size={"medium"} onClick={({target})=>openDropDownMenu(target, profileMenu)}>
                     <AccountCircle sx={{fontSize: 'larger'}}/>
-                </Badge>
             </IconButton>
 
-            {dropDownStatus.open&&<Pop {...dropDownStatus} closeDropDownMenu={closeDropDownMenu}/>}
+            {dropDownStatus.open&&<Pop {...dropDownStatus} closeDropDownMenu={closeDropDownMenu} />}
 
         </Box>
     );

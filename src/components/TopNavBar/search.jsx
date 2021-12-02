@@ -3,6 +3,7 @@ import { styled, alpha } from '@mui/material/styles';
 import {InputBase, InputAdornment} from '@mui/material';
 import {Search as SearchIcon, Cancel as Close} from '@mui/icons-material';
 import Pop from "../common/popover";
+import List from "../common/list";
 
 const Search = styled('div')(({ theme }) => ({
     position: 'relative',
@@ -61,12 +62,13 @@ export default function SearchBar() {
                 }}
                 onChange={({target})=> {
                     setSearchString(target.value);
+                    setOpen(true);
                 }}
                 endAdornment={searchString&&<InputAdornment position="end">
                     <Close onClick={()=>setSearchString('')} className={'cursor-pointer'}/>
                 </InputAdornment>}
             />
-            {searchString&&<Pop title={"Search Result"} target={target} open={(open)?true:false} closeDropDownMenu={closeDropDownMenu}/>}
+            {searchString&&<Pop content={<List menu={[{text: searchString}, {text: searchString}, {text: searchString}, {text: searchString}]} />} target={target} open={(open)?true:false} closeDropDownMenu={closeDropDownMenu}/>}
         </Search>
     );
 }
