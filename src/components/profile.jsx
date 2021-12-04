@@ -64,12 +64,12 @@ export default function Profile({user}){
 
     document.title = `${name} (@${username})`;
 
-    const profileMenu = [{text: 'Settings', link: 'Settings'}, {text: 'Edit profile', link: '/settings'}, {text: 'Change Password', link: 'settings/changePassword'}, {text: 'Logout', fn: ()=>logout()}, {text: 'Cancel'}]
+    const profileMenu = [{text: 'Settings', link: 'Settings', width: "300px", center: true}, {text: 'Edit profile', link: '/settings', width: "300px", center: true}, {text: 'Change Password', link: 'settings/changePassword', width: "300px", center: true}, {text: 'Logout', fn: ()=>logout(), width: "300px", center: true}]
 
     return (
         <center>
             <ProfileImage/>
-            <span style={userNameStyle}>{username}<PopupList menu={profileMenu} LaunchButton={renderSettingsIcon()}/></span>
+            <span style={userNameStyle}>{username}<PopupList list={profileMenu} LaunchButton={renderSettingsIcon()}/></span>
             <br/>
             <ButtonGroup disableRipple disableElevation sx={{ display: { sm: 'none', xs:'none', md: 'inline-flex'} }}>
                 <BtnValue value={"0"}/> <Btn title={"Posts"}/>

@@ -21,7 +21,7 @@ export default function List({list}){
             {
                 list.map(m=>(
                     <div key={m.text}>
-                        <ListButton onClick={()=>{m.fn?m.fn():history.push(m.link)}}>
+                        <ListButton style={{width: m.width||"100%", textAlign: (m.center&&"center")||null}} onClick={()=>{m.fn?m.fn():history.push(m.link)}}>
                             {m.icon&&(
                                 <ListItemIcon>
                                     {m.icon}

@@ -108,7 +108,9 @@ class Form extends Component {
                         name={input.name}
                         value={input.value}
                         type={input.type}
-                        required={true}
+                        multiline={input.type==='multiline'}
+                        required={!input.required_false?true:false}
+                        rows={5}
                         InputProps={{
                             endAdornment: (
                                 <Tooltip title={input.error} arrow={true} open={input.error?true:false}>
