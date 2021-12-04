@@ -22,9 +22,10 @@ export default function TopNavBar({user}) {
         title: null
     });
 
-    const openDropDownMenu = (target, menu, title=null)=>{
-        const content = <List menu={menu}/>
-        const status = {open: true, target, content, title};
+    const openDropDownMenu = (target=null, menu=[], title=null)=>{
+        const content = <List list={menu}/>
+        const open = true;
+        const status = {open, target, content, title};
         setDropDownStatus(status);
     }
 

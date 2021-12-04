@@ -10,7 +10,7 @@ export default function Pop({title, open, target, closeDropDownMenu, content, wi
             containerPadding={20}
             rootClose={true}
             onHide={closeDropDownMenu}
-            rootCloseEvent={'click'}
+            rootCloseEvent={'mousedown'}
             arrowProps={{style: {backgroundColor: '#000000'}}}
         >
             <Popover style={{borderRadius: '0', width: width||"100%"}}>

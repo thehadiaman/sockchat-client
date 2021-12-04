@@ -18,6 +18,11 @@ const Search = styled('div')(({ theme }) => ({
     },
 }));
 
+const getSearchString = (string)=>{
+    if(string.length>25) return `${string.slice(0, 25)}...`;
+    return string;
+}
+
 const SearchIconWrapper = styled('div')(({ theme }) => ({
     padding: theme.spacing(0, 2),
     height: '100%',
@@ -68,7 +73,7 @@ export default function SearchBar() {
                     <Close onClick={()=>setSearchString('')} className={'cursor-pointer'}/>
                 </InputAdornment>}
             />
-            {searchString&&<Pop content={<List menu={[{text: searchString}, {text: searchString}, {text: searchString}, {text: searchString}]} />} target={target} open={(open)?true:false} closeDropDownMenu={closeDropDownMenu}/>}
+            {searchString&&<Pop width={"400px"} content={<List list={[{text: getSearchString(searchString)}]}/>} target={target} open={(open)?true:false} closeDropDownMenu={closeDropDownMenu}/>}
         </Search>
     );
 }

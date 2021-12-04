@@ -27,7 +27,6 @@ export default function BottomNavBar() {
                     setValue(newValue);
                 }}
             >
-
                 <NavButton onClick={()=>history.push('/')} disableRipple icon={renderHomeIcon()} />
                     <NavButton onClick={()=>history.push('/inbox')} disableRipple icon={getIcon(renderMessageIcon())} />
                     <NavButton onClick={()=>history.push('/notifications')} disableRipple icon={getIcon(renderNotificationIcon())} />

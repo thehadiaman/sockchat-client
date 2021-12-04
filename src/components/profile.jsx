@@ -77,7 +77,7 @@ export default function Profile({user}){
                 <BtnValue value={following.length}/> <Btn title={"Following"}/>
             </ButtonGroup>
             <Divider/>
-            <Tabs value={tabValue} sx={{ display: { sm: 'inline-flex', xs:'inline-flex', md: 'none'} }}>
+            <Tabs sx={{ display: { sm: 'inline-flex', xs:'inline-flex', md: 'none' }}} value={tabValue}>
                 <TabBtn value={"posts"} label={`0 Posts`} />
                 <TabBtn value={"followes"} label={`${followers.length} Followers`} />
                 <TabBtn value={"following"} label={`${following.length} Following`} />

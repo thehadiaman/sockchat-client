@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {TextField, InputAdornment, Tooltip} from "@mui/material";
+import {TextField, InputAdornment, Tooltip, FormControl, FormHelperText} from "@mui/material";
 import Joi from "joi-browser";
 import {renderNoneIcon, renderOkIcon} from "../common/svgImages";
 import SimpleSnackbar from "./snackbar";
@@ -103,29 +103,36 @@ class Form extends Component {
 
     renderInput=(inputs, button)=>{
         return <div>
-            {inputs.map(input=>{
-                return<TextField
-                    key={input.name}
-                    name={input.name}
-                    value={input.value}
-                    type={input.type}
-                    required={true}
-                    InputProps={{
-                        endAdornment: (
-                            <Tooltip title={input.error} arrow={true} open={input.error?true:false}>
-                                <InputAdornment position="end">
-                                    {(input.error?true:false)&&renderNoneIcon()}
-                                    {(input.error===""&&!input.btnDisabled)&&renderOkIcon()}
-                                </InputAdornment>
-                            </Tooltip>
-                        ),
-                    }}
-                    error={input.error?true:false}
-                    onChange={this.handleChange}
-                    style={{marginBottom: '10px'}}
-                    label={input.label}
-                    fullWidth
-                />
+            {inputs.map(input=>{return <FormControl key={input.name} variant={"standard"} fullWidth>
+                    <TextField
+                        name={input.name}
+                        value={input.value}
+                        type={input.type}
+                        required={true}
+                        InputProps={{
+                            endAdornment: (
+                                <Tooltip title={input.error} arrow={true} open={input.error?true:false}>
+                                    <InputAdornment position="end">
+                                        {(input.error?true:false)&&renderNoneIcon()}
+                                        {(input.error===""&&!input.btnDisabled)&&renderOkIcon()}
+                                    </InputAdornment>
+                                </Tooltip>
+                            ),
+                        }}
+                        error={input.error?true:false}
+                        onChange={this.handleChange}
+                        style={{marginBottom: input.helper?'0':'10px'}}
+                        label={input.label}
+                        fullWidth
+                    />
+                    {
+                        input.helper&&(
+                            <FormHelperText style={{marginBottom: '15px'}}>
+                                {input.helper}
+                            </FormHelperText>
+                        )
+                    }
+                </FormControl>
             })}
             {button}
             <SimpleSnackbar message={this.state.snackMessage} closeSnackMessage={this.closeSnackMessage}/>

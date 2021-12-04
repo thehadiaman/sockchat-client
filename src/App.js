@@ -6,6 +6,7 @@ import ResetPassword from "./components/resetPassword";
 import {authUser} from "./services/userService";
 import LoadePage from "./components/loadingPage/loadePage";
 import Profile from "./components/profile";
+import Settings from "./components/Settings/settings";
 import Home from "./components/home/home";
 import NotFound from "./components/notFound";
 import TopNavBar from "./components/TopNavBar/topNavBar";
@@ -27,7 +28,7 @@ function App(){
             } catch (ex){
                 localStorage.removeItem('jwtToken');
             }
-            setTimeout(()=>setLoad(true), 5000)
+            setLoad(true)
         }
         auth();
     }, []);
@@ -42,6 +43,7 @@ function App(){
             <Switch>
                 <Route exact path={'/verification'} render={(props)=><Welcome {...props}/>}/>
                 <Route exact path={'/profile'} render={(props)=><Profile user={user} {...props}/>}/>
+                <Route path={'/settings'} render={(props)=><Settings user={user} {...props}/>}/>
                 <Route exact path={'/'} render={(props)=><Home user={user} {...props}/>}/>
                 <Route render={(props)=><NotFound/>}/>
             </Switch>
