@@ -71,6 +71,8 @@ export default function Profile({user}){
             <ProfileImage/>
             <span style={userNameStyle}>{username}<PopupList list={profileMenu} LaunchButton={renderSettingsIcon()}/></span>
             <br/>
+            <p style={{textAlign: 'left'}}>{name}</p>
+            <br/>
             <ButtonGroup disableRipple disableElevation sx={{ display: { sm: 'none', xs:'none', md: 'inline-flex'} }}>
                 <BtnValue value={"0"}/> <Btn title={"Posts"}/>
                 <BtnValue value={followers.length}/> <Btn title={"Followers"}/>

@@ -2,6 +2,7 @@ import React from "react";
 import {LoadingButton} from "@mui/lab";
 import Form from "../common/form";
 import Joi from "joi-browser";
+import Progress from "../common/CircularProgress/progress";
 
 class ProfileSettings extends Form {
 
@@ -38,7 +39,7 @@ class ProfileSettings extends Form {
     render() {
         document.title = "Edit Profile";
         const {inputs, btnDisabled, loadingBtn} = this.state;
-        const button = <LoadingButton loading={loadingBtn} type={'submit'} disabled={this.btnDisabled()||btnDisabled} variant={'contained'} fullWidth style={{margin: '0 0 10px 0'}}>Submit</LoadingButton>;
+        const button = <LoadingButton loadingIndicator={<Progress/>} loading={loadingBtn} type={'submit'} disabled={this.btnDisabled()||btnDisabled} variant={'contained'} fullWidth style={{margin: '0 0 10px 0'}}>Submit</LoadingButton>;
         return <form onSubmit={this.handleSubmit}>
             <br/>
             <h1>Edit Profile</h1>
