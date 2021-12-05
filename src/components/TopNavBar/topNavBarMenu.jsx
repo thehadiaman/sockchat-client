@@ -34,7 +34,7 @@ export default function TopNavBarMenu({user}){
     }
 
     const notificationData = [{text: 'Notification One'}, {text: 'Notification Two'}, {text: 'Notification Three'}, {text: 'Notification Four'}];
-    const profileMenuItems = [{text: 'Profile', icon: renderProfileIcon(), link: '/profile'}, {text: 'Settings', icon: renderSettingsIcon(), link: 'Settings'}, {text: 'Logout', icon: renderLogoutIcon(), fn: logout}];
+    const profileMenuItems = [{text: 'Profile', icon: renderProfileIcon(), link: '/profile'}, {text: 'Settings', icon: renderSettingsIcon(), link: '/settings'}, {text: 'Logout', icon: renderLogoutIcon(), fn: logout}];
     const verificationFalseProfileMenuItems = [{text: 'Logout', icon: renderLogoutIcon(), fn: logout}];
 
     const userLoginTrueMenu = (

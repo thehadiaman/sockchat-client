@@ -7,7 +7,7 @@ import ForgetPassword from "./forgetPassword";
 import Verification from "../verification";
 import logo from "../images/logo.png";
 
-const forgetPasswordLink = <Link to={'/forgetPassword'} className={'link'}>Forget your password?</Link>;
+const forgotPasswordLink = <Link to={'/forgetPassword'} className={'link'}>Forgot your password?</Link>;
 const signUpLink = <div>Don't you have an account? <Link to={'/signup'} className={'link'}> Sign up</Link></div>;
 const loginLink = <div>Already have an account? <Link to={'/'} className={'link'}> Login</Link></div>;
 const signupText = <div>You are creating a new account, wait for verification link after signup.</div>;
@@ -40,7 +40,7 @@ export default function Welcome(props){
                     {
                         (match.path==='/signup'&&signupText)||
                         (match.path==='/forgetPassword'&&newAccount)||
-                        (match.path==='/'&&forgetPasswordLink)
+                        (match.path==='/'&&forgotPasswordLink)
                     }
                 </CardContent>
             </Card>

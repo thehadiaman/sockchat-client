@@ -4,6 +4,7 @@ import List from "../common/list";
 import {Route} from 'react-router-dom';
 import ProfileSettings from "./profileSettings";
 import PasswordSettings from "./passwordSettings";
+import DeleteAccountSettings from "./deleteAccountSettings";
 
 
 function logout(){
@@ -29,6 +30,7 @@ export default function Settings({user}){
                 <Container>
                     <Route path={'/settings/profile'} render={(props)=><ProfileSettings user={user} {...props}/>}/>
                     <Route path={'/settings/password'} render={(props)=><PasswordSettings user={user} {...props}/>}/>
+                    <Route path={'/settings/delete'} render={(props)=><DeleteAccountSettings user={user} {...props}/>}/>
                 </Container>
             </Grid>
         </Grid>
