@@ -3,6 +3,8 @@ import {Container, Grid} from "@mui/material";
 import List from "../common/list";
 import {Route} from 'react-router-dom';
 import ProfileSettings from "./profileSettings";
+import PasswordSettings from "./passwordSettings";
+
 
 function logout(){
     localStorage.removeItem('jwtToken');
@@ -26,6 +28,7 @@ export default function Settings({user}){
             <Grid item xs={9} style={{border: '1px solid #dddddd'}}>
                 <Container>
                     <Route path={'/settings/profile'} render={(props)=><ProfileSettings user={user} {...props}/>}/>
+                    <Route path={'/settings/password'} render={(props)=><PasswordSettings user={user} {...props}/>}/>
                 </Container>
             </Grid>
         </Grid>

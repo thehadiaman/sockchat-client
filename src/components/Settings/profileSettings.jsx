@@ -49,11 +49,11 @@ class ProfileSettings extends Form {
     render() {
         document.title = "Edit Profile";
         const {inputs, btnDisabled, loadingBtn} = this.state;
-        const button = <LoadingButton loadingIndicator={<Progress/>} loading={loadingBtn} type={'submit'} disabled={this.btnDisabled()||btnDisabled} variant={'contained'} fullWidth style={{margin: '0 0 10px 0'}}>Submit</LoadingButton>;
+        const profileSaveButton = <LoadingButton loadingIndicator={<Progress/>} loading={loadingBtn} type={'submit'} disabled={this.btnDisabled()||btnDisabled} variant={'contained'} fullWidth style={{margin: '0 0 10px 0'}}>Save</LoadingButton>;
         return <form onSubmit={this.handleSubmit}>
             <br/>
             <h1>Edit Profile</h1>
-            {this.renderInput(inputs, button)}
+            {this.renderInput(inputs, profileSaveButton)}
             <br/>
             <br/>
         </form>;
