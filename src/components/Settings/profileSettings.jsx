@@ -3,6 +3,7 @@ import {LoadingButton} from "@mui/lab";
 import Form from "../common/form";
 import Joi from "joi-browser";
 import Progress from "../common/CircularProgress/progress";
+import {checkId} from "../../services/userService";
 
 class ProfileSettings extends Form {
 
@@ -20,8 +21,18 @@ class ProfileSettings extends Form {
         bio: Joi.string().min(0).max(250).allow("").label('Bio')
     };
 
-    doChange=()=>{
-        return null;
+    doChange=async({name, value})=>{
+        this.setState({loadingbtn: false, btnDisabled: false});
+        if(['username'].includes(name)){
+            const inputs = this.state.inputs;
+            const data = (await checkId(value)).data;
+            if(data){
+                const input = inputs.find(input=>input.name===name);
+                input.btnDisabled = true;
+                input.error = `${name} already used.`
+                this.setState({inputs});
+            }
+        }
     }
 
     doSubmit=async(values)=>{
@@ -32,8 +43,7 @@ class ProfileSettings extends Form {
         }catch (ex) {
             this.setState({snackMessage: ex.response.data});
         }
-        this.setState({loadingbtn: false});
-        this.setState({btnDisabled: false});
+        this.setState({loadingbtn: false, btnDisabled: false});
     }
 
     render() {

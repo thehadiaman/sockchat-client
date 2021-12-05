@@ -35,7 +35,8 @@ export default function TopNavBar({user}) {
     }
 
     const notificationData = [{text: 'Notification One'}, {text: 'Notification Two'}, {text: 'Notification Three'}, {text: 'Notification Four'}];
-    const profileMenu = [{text: 'Profile', icon: renderProfileIcon(), link: '/profile'}, {text: 'Settings', icon: renderSettingsIcon(), link: 'Settings'}, {text: 'Logout', icon: renderLogoutIcon(), fn: ()=>logout()}]
+    const profileMenu = [{text: 'Profile', icon: renderProfileIcon(), link: '/profile'}, {text: 'Settings', icon: renderSettingsIcon(), link: 'Settings'}, {text: 'Logout', icon: renderLogoutIcon(), fn: logout}];
+    const verificationFalseProfileMenu = [{text: 'Logout', icon: renderLogoutIcon(), fn: logout}];
 
     const userLoginTrue = (
         <Box sx={{ display: { xs: 'none', md: 'flex', sm: 'none', lg: 'flex' }, position: 'absolute', right: '-10px' }}>
@@ -65,9 +66,10 @@ export default function TopNavBar({user}) {
 
     const userLoginTrueVerificationFalse = (
         <Box sx={{ display: { xs: 'none', md: 'flex', sm: 'flex', lg: 'flex' }, position: 'absolute', right: '-10px' }}>
-            <IconButton>
+            <IconButton onClick={({target})=>openDropDownMenu(target, verificationFalseProfileMenu)}>
                 <AccountCircle sx={{fontSize: 'larger'}}/>
             </IconButton>
+            {dropDownStatus.open&&<Pop {...dropDownStatus} closeDropDownMenu={closeDropDownMenu} />}
         </Box>
     );
 
