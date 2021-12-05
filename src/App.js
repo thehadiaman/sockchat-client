@@ -4,7 +4,7 @@ import './App.css';
 import Welcome from "./components/welcomePage/welcome";
 import ResetPassword from "./components/resetPassword";
 import {authUser} from "./services/userService";
-import LoadePage from "./components/loadingPage/loadePage";
+import LoadePage from "./components/LoadingPage/loadePage";
 import Profile from "./components/profile";
 import Settings from "./components/Settings/settings";
 import Home from "./components/home/home";
