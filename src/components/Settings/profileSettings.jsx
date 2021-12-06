@@ -4,6 +4,7 @@ import Form from "../common/form";
 import Joi from "joi-browser";
 import Progress from "../common/CircularProgress/progress";
 import {checkId} from "../../services/userService";
+import {updateUser} from "../../services/userService";
 
 class ProfileSettings extends Form {
 
@@ -22,7 +23,7 @@ class ProfileSettings extends Form {
     };
 
     doChange=async({name, value})=>{
-        this.setState({loadingbtn: false, btnDisabled: false});
+        this.setState({loadingBtn: false, btnDisabled: false});
         if(['username'].includes(name)){
             const inputs = this.state.inputs;
             const data = (await checkId(value)).data;
@@ -38,12 +39,14 @@ class ProfileSettings extends Form {
     doSubmit=async(values)=>{
         this.setState({btnDisabled:false, loadingBtn: true});
         try{
-            setTimeout(()=>this.setState({btnDisabled: true, loadingBtn: false}), 3000);
+            await updateUser(values);
+            await this.props.setUser();
+            this.setState({btnDisabled: true, loadingBtn: false})
             return null;
         }catch (ex) {
             this.setState({snackMessage: ex.response.data});
         }
-        this.setState({loadingbtn: false, btnDisabled: false});
+        this.setState({loadingBtn: false, btnDisabled: false});
     }
 
     render() {

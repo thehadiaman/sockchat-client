@@ -19,16 +19,20 @@ function App(){
     const [user, setUser] = useState({});
     const [load, setLoad] = useState(false);
 
+    async function authenticateUser(){
+        try {
+            const jwt = localStorage.getItem('jwtToken');
+            const user = (await authUser()).data;
+            if (jwt !== null) setUser(user);
+        } catch (ex){
+            localStorage.removeItem('jwtToken');
+        }
+        setLoad(true)
+    }
+
     useEffect(() => {
         async function auth(){
-            try {
-                const jwt = localStorage.getItem('jwtToken');
-                const user = (await authUser()).data;
-                if (jwt !== null) setUser(user);
-            } catch (ex){
-                localStorage.removeItem('jwtToken');
-            }
-            setLoad(true)
+            await authenticateUser();
         }
         auth();
     }, []);
@@ -43,7 +47,7 @@ function App(){
             <Switch>
                 <Route exact path={'/verification'} render={(props)=><Welcome {...props}/>}/>
                 <Route exact path={'/profile'} render={(props)=><Profile user={user} {...props}/>}/>
-                <Route path={'/settings'} render={(props)=><Settings user={user} {...props}/>}/>
+                <Route path={'/settings'} render={(props)=><Settings user={user} setUser={authenticateUser} {...props}/>}/>
                 <Route exact path={'/'} render={(props)=><Home user={user} {...props}/>}/>
                 <Route render={(props)=><NotFound/>}/>
             </Switch>

@@ -12,7 +12,7 @@ function logout(){
     window.location = '/';
 }
 
-export default function Settings({user}){
+export default function Settings({user, setUser}){
 
     const settingsList = [{text: "Edit Profile", link: "/settings/profile"},
         {text: "Change Password", link: "/settings/password"},
@@ -28,8 +28,8 @@ export default function Settings({user}){
             </Grid>
             <Grid item xs={9} style={{border: '1px solid #dddddd'}}>
                 <Container>
-                    <Route path={'/settings/profile'} render={(props)=><ProfileSettings user={user} {...props}/>}/>
-                    <Route path={'/settings/password'} render={(props)=><PasswordSettings user={user} {...props}/>}/>
+                    <Route path={'/settings/profile'} render={(props)=><ProfileSettings user={user} setUser={setUser} {...props}/>}/>
+                    <Route path={'/settings/password'} render={(props)=><PasswordSettings user={user} setUser={setUser} {...props}/>}/>
                     <Route path={'/settings/delete'} render={(props)=><DeleteAccountSettings user={user} {...props}/>}/>
                 </Container>
             </Grid>

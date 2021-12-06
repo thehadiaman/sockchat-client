@@ -34,3 +34,11 @@ export function resetPassword(body, token){
 export function authUser(){
     return http.get(`${apiEndPoint}/me`);
 }
+
+export function updateUser(body){
+    return http.put(apiEndPoint, body);
+}
+
+export function updatePassword(body){
+    return http.put(`${apiEndPoint}/changePassword`, body);
+}

@@ -64,7 +64,7 @@ export default function Profile({user}){
 
     document.title = `${name} (@${username})`;
 
-    const profileMenuitems = [{text: 'Settings', link: 'Settings', width: "300px", center: true}, {text: 'Edit profile', link: '/settings', width: "300px", center: true}, {text: 'Change Password', link: 'settings/changePassword', width: "300px", center: true}, {text: 'Logout', fn: ()=>logout(), width: "300px", center: true}]
+    const profileMenuitems = [{text: 'Settings', link: '/settings', width: "300px", center: true}, {text: 'Edit profile', link: '/settings/profile', width: "300px", center: true}, {text: 'Change Password', link: 'settings/password', width: "300px", center: true}, {text: 'Logout', fn: logout, width: "300px", center: true}];
 
     return (
         <center>
