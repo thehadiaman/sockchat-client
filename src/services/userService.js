@@ -46,3 +46,7 @@ export function changePassword(body){
 export function scheduleAccountDelete(body){
     return http.put(`${apiEndPoint}/scheduleDelete`, body);
 }
+
+export function cancelAccountDelete(){
+    return http.put(`${apiEndPoint}/cancelDelete`);
+}

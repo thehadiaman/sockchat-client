@@ -31,8 +31,7 @@ class ProfileSettings extends Form {
             const data = await changePassword(values);
             const token = data.headers['x-auth-token'];
             localStorage.setItem('jwtToken', token);
-            this.setState({btnDisabled: true, loadingBtn: false});
-            return null;
+            window.location = '/settings';
         }catch (ex) {
             this.setState({snackMessage: ex.response.data});
         }

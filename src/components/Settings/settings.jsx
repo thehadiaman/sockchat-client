@@ -30,7 +30,7 @@ export default function Settings({user, setUser}){
                 <Container>
                     <Route path={'/settings/profile'} render={(props)=><ProfileSettings user={user} setUser={setUser} {...props}/>}/>
                     <Route path={'/settings/password'} render={(props)=><PasswordSettings user={user} setUser={setUser} {...props}/>}/>
-                    <Route path={'/settings/delete'} render={(props)=><DeleteAccountSettings user={user} {...props}/>}/>
+                    <Route path={'/settings/delete'} render={(props)=><DeleteAccountSettings user={user} setUser={setUser} {...props}/>}/>
                 </Container>
             </Grid>
         </Grid>
