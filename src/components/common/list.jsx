@@ -5,6 +5,11 @@ import { useHistory } from "react-router-dom";
 export default function List({list}){
     const history = useHistory();
 
+    function handleListItemClick(func, link){
+        if(func) func()
+        else history.push(link)
+    }
+
     const ListButton = styled((props) => (
         <ListItemButton disableRipple {...props} />
     ))(() => ({
@@ -21,7 +26,7 @@ export default function List({list}){
             {
                 list.map(m=>(
                     <div key={m.text}>
-                        <ListButton selected={history.location.pathname===m.link} style={{width: m.width||"100%", textAlign: (m.center&&"center")||null}} onClick={()=>{m.fn?m.fn():history.push(m.link)}}>
+                        <ListButton selected={history.location.pathname===m.link?true:false} style={{width: m.width||"100%", textAlign: (m.center&&"center")||null}} onClick={()=>{handleListItemClick(m.fn, m.link)}}>
                             {m.icon&&(
                                 <ListItemIcon>
                                     {m.icon}

@@ -3,6 +3,7 @@ import {LoadingButton} from "@mui/lab";
 import Form from "../common/form";
 import Joi from "joi-browser";
 import Progress from "../common/CircularProgress/progress";
+import {changePassword} from "../../services/userService";
 
 class ProfileSettings extends Form {
 
@@ -27,12 +28,15 @@ class ProfileSettings extends Form {
     doSubmit=async(values)=>{
         this.setState({btnDisabled:false, loadingBtn: true});
         try{
-            setTimeout(()=>this.setState({btnDisabled: true, loadingBtn: false}), 3000);
+            const data = await changePassword(values);
+            const token = data.headers['x-auth-token'];
+            localStorage.setItem('jwtToken', token);
+            this.setState({btnDisabled: true, loadingBtn: false});
             return null;
         }catch (ex) {
             this.setState({snackMessage: ex.response.data});
         }
-        this.setState({loadingbtn: false, btnDisabled: false});
+        this.setState({loadingBtn: false, btnDisabled: false});
     }
 
     render() {

@@ -39,6 +39,10 @@ export function updateUser(body){
     return http.put(apiEndPoint, body);
 }
 
-export function updatePassword(body){
+export function changePassword(body){
     return http.put(`${apiEndPoint}/changePassword`, body);
+}
+
+export function scheduleAccountDelete(body){
+    return http.put(`${apiEndPoint}/scheduleDelete`, body);
 }

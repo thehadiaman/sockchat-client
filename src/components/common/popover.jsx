@@ -15,7 +15,9 @@ export default function Pop({title, open, target, closeDropDownMenu, content, wi
         >
             <Popover style={{borderRadius: '0', width: width||"100%"}}>
                 {title&&<Popover.Header as={"h6"} className={"popover-title"}>{title}</Popover.Header>}
-                {content}
+                <div onClick={closeDropDownMenu}>
+                    {content}
+                </div>
             </Popover>
         </Overlay>
     );
