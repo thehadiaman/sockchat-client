@@ -12,7 +12,7 @@ export default function TopNavBar({user}) {
                     <Box
                         sx={{ marginRight: {xs: '10px'} }}
                     >
-                        <img className={'title-image'} onClick={()=>console.log("123")} src={logo} alt="Logo" width={'70px'} height={'20px'}/>
+                        <img className={'title-image'} src={logo} alt="Logo" width={'70px'} height={'20px'}/>
                     </Box>
                     <Box sx={{ flexGrow: 1 }} />
                     {

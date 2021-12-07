@@ -21,7 +21,7 @@ class ProfileSettings extends Form {
         conformPassword: Joi.string().min(6).max(50).required().label('Password'),
     };
 
-    doChange=async({name, value})=>{
+    doChange=async()=>{
         return null;
     }
 
