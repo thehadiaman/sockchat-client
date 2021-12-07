@@ -6,7 +6,6 @@ import ProfileSettings from "./profileSettings";
 import PasswordSettings from "./passwordSettings";
 import DeleteAccountSettings from "./deleteAccountSettings";
 
-
 function logout(){
     localStorage.removeItem('jwtToken');
     window.location = '/';
@@ -53,9 +52,14 @@ export default function Settings({user, setUser}){
             }
             <Grid item xs={12} sm={12} md={9} lg={9} style={{border: '1px solid #dddddd'}}>
                 <Container>
-                    <Route path={'/settings/profile'} render={(props)=><ProfileSettings user={user} setUser={setUser} {...props}/>}/>
-                    <Route path={'/settings/password'} render={(props)=><PasswordSettings user={user} setUser={setUser} {...props}/>}/>
-                    <Route path={'/settings/delete'} render={(props)=><DeleteAccountSettings user={user} setUser={setUser} {...props}/>}/>
+                    <Route exact path={'/settings/profile'} render={(props)=><ProfileSettings user={user} setUser={setUser} {...props}/>}/>
+                    <Route exact path={'/settings/password'} render={(props)=><PasswordSettings user={user} setUser={setUser} {...props}/>}/>
+                    <Route exact path={'/settings/delete'} render={(props)=><DeleteAccountSettings user={user} setUser={setUser} {...props}/>}/>
+                    {
+                        (history.location.pathname==='/settings')&&(size.width>=900)&&(
+                            <Route exact path={'/settings'} render={(props)=><div>SETTINGS</div>}/>
+                        )
+                    }
                 </Container>
             </Grid>
         </Grid>

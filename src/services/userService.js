@@ -50,3 +50,7 @@ export function scheduleAccountDelete(body){
 export function cancelAccountDelete(){
     return http.put(`${apiEndPoint}/cancelDelete`);
 }
+
+export function findUser(searchString){
+    return http.get(`${apiEndPoint}/getUsers?searchString=${searchString}`);
+}
