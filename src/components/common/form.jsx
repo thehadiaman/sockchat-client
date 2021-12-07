@@ -48,7 +48,15 @@ class Form extends Component {
         input.value = target.value;
         inputs[indexOfInput] = input;
         this.setState({inputs});
-        const {error} = this.validateInput(target);
+        let {error} = this.validateInput(target);
+        const checkPasswordMatchFalse = (target.name==='conformPassword')&&(inputs.find(input=>input.name==='password').value!==target.value);
+        if(checkPasswordMatchFalse){
+            error = {
+                details: [
+                    {message: 'Password doesn\'t match.'}
+                ]
+            }
+        }
         if(error){
             input.error = error.details[0].message;
             input.btnDisabled = true;

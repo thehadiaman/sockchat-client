@@ -11,7 +11,9 @@ function SimpleDialog(props) {
 
     return (
         <Dialog onClose={handleClose} open={open}>
-            <List list={list}/>
+            <div onClick={handleClose}>
+                <List list={list}/>
+            </div>
         </Dialog>
     );
 }

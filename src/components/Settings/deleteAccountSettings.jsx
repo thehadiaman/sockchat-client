@@ -35,7 +35,7 @@ class PasswordSettings extends Form {
         this.setState({btnDisabled:false, loadingBtn: true});
         try{
             const data = (await scheduleAccountDelete(values)).data;
-            this.setState({btnDisabled: true, loadingBtn: false});
+            this.setState({btnDisabled: true, loadingBtn: false, snackMessage: data});
             await this.props.setUser();
             this.clearInput();
             return null;
@@ -58,7 +58,8 @@ class PasswordSettings extends Form {
             return <div>
                 <h1>Delete Account</h1>
                 <p>Account Scheduled to delete.</p>
-                <Button variant={"contained"} color={'error'} onClick={this.handleCancelAccountDelete}>Cancel Delete</Button>
+                <Button variant={"contained"} color={'error'} onClick={this.handleCancelAccountDelete}>Cancel deletion
+                </Button>
                 <br/>
                 <br/>
                 <p>This action will cancel the request to delete your account.</p>
