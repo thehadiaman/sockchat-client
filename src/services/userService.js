@@ -54,3 +54,7 @@ export function cancelAccountDelete(){
 export function findUser(searchString){
     return http.get(`${apiEndPoint}/getUsers?searchString=${searchString}`);
 }
+
+export function getUser(username){
+    return http.get(`${apiEndPoint}/getUser/${username}`)
+}

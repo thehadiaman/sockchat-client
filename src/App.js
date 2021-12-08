@@ -46,12 +46,12 @@ function App(){
             <TopNavBar user={user}/>
             <Switch>
                 <Route exact path={'/verification'} render={(props)=><Welcome {...props}/>}/>
-                <Route exact path={'/profile'} render={(props)=><Profile user={user} {...props}/>}/>
+                <Route exact path={'/profile/:username'} render={(props)=><Profile user={user} {...props}/>}/>
                 <Route path={'/settings'} render={(props)=><Settings user={user} setUser={authenticateUser} {...props}/>}/>
                 <Route exact path={'/'} render={(props)=><Home user={user} {...props}/>}/>
                 <Route render={(props)=><NotFound/>}/>
             </Switch>
-            <BottomNavBar/>
+            <BottomNavBar user={user}/>
         </div>;
     }
 

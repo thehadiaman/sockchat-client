@@ -42,7 +42,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 const createUsersList = (array)=>{
     const list = [];
     for(let a=0;a<array.length;a++){
-        list[a] = {text: array[a].username, icon: <Avatar/>}
+        list[a] = {text: array[a].username, icon: <Avatar src={"https://picsum.photos/50"} alt={array[a].name}/>, link: `/profile/${array[a].username}`}
     }
     return list;
 }

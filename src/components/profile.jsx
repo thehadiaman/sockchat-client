@@ -1,7 +1,9 @@
-import React, {useState} from "react";
-import {Avatar, ButtonGroup, Divider, styled, Tabs, Tab} from "@mui/material";
+import React, {useState, useEffect} from "react";
+import {Avatar, ButtonGroup, Divider, styled, Tabs, Tab, Button} from "@mui/material";
 import {renderSettingsIcon} from "../components/common/svgImages";
 import PopupList from "./common/popupList";
+import NotFound from "./notFound";
+import {getUser} from "../services/userService";
 
 function logout (){
     localStorage.removeItem('jwtToken');
@@ -9,9 +11,34 @@ function logout (){
 }
 
 
-export default function Profile({user}){
-    const {name, username, followers, following} = user;
+export default function Profile(props){
+    const [user, setUserData] = useState({_id: '', name: '', username: '', followers: [], following: [], bio: ''});
+    const [invalidUserName, setInvalidUser] = useState(false);
+    const [isLoading, setLoading] = useState(true);
     const [tabValue, setTabValue] = useState("posts");
+
+    useEffect(()=>{
+        async function setUser(){
+            try{
+                const userData = (await getUser(props.match.params.username)).data;
+                setUserData(userData)
+            }catch (e) {
+                console.log(e)
+                setInvalidUser(true)
+            }
+            setLoading(false)
+        }
+        setUser();
+    }, [props.match])
+    const {_id, name, username, followers, following, bio} = user;
+
+    if(invalidUserName){
+        return <NotFound/>
+    }
+
+    if(isLoading){
+        return <div>Loaging.</div>
+    }
 
     const ProfileImage = styled((props) => (
         <Avatar {...props} />
@@ -64,13 +91,18 @@ export default function Profile({user}){
 
     document.title = `${name} (@${username})`;
 
-    const profileMenuitems = [{text: 'Settings', link: '/settings', width: "300px", center: true}, {text: 'Edit profile', link: '/settings/profile', width: "300px", center: true}, {text: 'Change Password', link: 'settings/password', width: "300px", center: true}, {text: 'Logout', fn: logout, width: "300px", center: true}, {text: "Cancel", center: true}];
+    const profileMenuitems = [{text: 'Settings', link: '/settings', width: "300px", center: true}, {text: 'Edit profile', link: '/settings/profile', width: "300px", center: true}, {text: 'Change Password', link: '/settings/password', width: "300px", center: true}, {text: 'Logout', fn: logout, width: "300px", center: true}, {text: "Cancel", center: true}];
 
     return (
         <center>
             <ProfileImage/>
-            <span style={userNameStyle}>{username}<PopupList list={profileMenuitems} LaunchButton={renderSettingsIcon()}/><br/>{user.name}</span>
-            {user.bio&&(<span><br/>{user.bio}</span>)}
+            <span style={userNameStyle}>{username}
+                {username===props.user.username?<PopupList list={profileMenuitems} LaunchButton={renderSettingsIcon()}/>:
+                    <Button style={{size: '20px', marginLeft: '10px', padding: '5px 20px 5px 20px'}} variant={'contained'}>{user.following.includes(_id)?'unfollow':'follow'}</Button>}
+                <br/>
+                {name}
+            </span>
+            {bio&&(<span><br/>{bio}</span>)}
             <br/>
             <ButtonGroup disableRipple disableElevation sx={{ display: { sm: 'none', xs:'none', md: 'inline-flex'} }}>
                 <BtnValue value={"0"}/> <Btn title={"Posts"}/>
