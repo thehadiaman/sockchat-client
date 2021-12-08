@@ -56,5 +56,9 @@ export function findUser(searchString){
 }
 
 export function getUser(username){
-    return http.get(`${apiEndPoint}/getUser/${username}`)
+    return http.get(`${apiEndPoint}/getUser/${username}`);
+}
+
+export function followOrUnFollow(body){
+    return http.put(`${apiEndPoint}/handleFollow`, body);
 }

@@ -20,7 +20,7 @@ export default function List({list}){
 
     return(
         <TheList
-            sx={{ width: '100%', bgcolor: 'background.paper', padding: '0' }}
+            sx={{ width: '100%', bgcolor: 'background.paper', padding: '0', overflowX: 'hidden' }}
             component="nav"
         >
             {

@@ -85,7 +85,7 @@ export default function SearchBar() {
                     <Close onClick={()=>setSearchString('')} className={'cursor-pointer'}/>
                 </InputAdornment>}
             />
-            {searchString&&<Pop width={"400px"} content={<List list={users}/>} target={target} open={(open)?true:false} closeDropDownMenu={closeDropDownMenu}/>}
+            {(searchString&&users.length>0)&&<div onClick={()=>setSearchString('')}><Pop content={<List list={users}/>} target={target} open={(open)?true:false} closeDropDownMenu={closeDropDownMenu} scroll={'scroll'} height={"18rem"} width={"15rem"}/></div>}
         </Search>
     );
 }

@@ -3,7 +3,7 @@ import {Avatar, ButtonGroup, Divider, styled, Tabs, Tab, Button} from "@mui/mate
 import {renderSettingsIcon} from "../components/common/svgImages";
 import PopupList from "./common/popupList";
 import NotFound from "./notFound";
-import {getUser} from "../services/userService";
+import {getUser, followOrUnFollow} from "../services/userService";
 
 function logout (){
     localStorage.removeItem('jwtToken');
@@ -30,7 +30,6 @@ export default function Profile(props){
         }
         setUser();
     }, [props.match])
-    const {_id, name, username, followers, following, bio} = user;
 
     if(invalidUserName){
         return <NotFound/>
@@ -89,6 +88,17 @@ export default function Profile(props){
         width: "33%"
     }));
 
+    const handleFollow = (username)=>{
+        const copyOfUser = {...user};
+        if(copyOfUser.followers.includes(props.user.username)){
+            const index = copyOfUser.followers.indexOf('X')
+            copyOfUser.followers.splice(index);
+        }else copyOfUser.followers.push(props.user.username);
+        setUserData(copyOfUser)
+        followOrUnFollow({username: username});
+    }
+
+    const {name, username, followers, following, bio} = user;
     document.title = `${name} (@${username})`;
 
     const profileMenuitems = [{text: 'Settings', link: '/settings', width: "300px", center: true}, {text: 'Edit profile', link: '/settings/profile', width: "300px", center: true}, {text: 'Change Password', link: '/settings/password', width: "300px", center: true}, {text: 'Logout', fn: logout, width: "300px", center: true}, {text: "Cancel", center: true}];
@@ -98,7 +108,7 @@ export default function Profile(props){
             <ProfileImage/>
             <span style={userNameStyle}>{username}
                 {username===props.user.username?<PopupList list={profileMenuitems} LaunchButton={renderSettingsIcon()}/>:
-                    <Button style={{size: '20px', marginLeft: '10px', padding: '5px 20px 5px 20px'}} variant={'contained'}>{user.following.includes(_id)?'unfollow':'follow'}</Button>}
+                    <Button onClick={()=>handleFollow(username)} style={{size: '20px', marginLeft: '10px', padding: '5px 20px 5px 20px'}} variant={'contained'}>{user.followers.includes(props.user.username)?'unfollow':'follow'}</Button>}
                 <br/>
                 {name}
             </span>
