@@ -11,13 +11,14 @@ import Home from "./components/home/home";
 import NotFound from "./components/notFound";
 import TopNavBar from "./components/TopNavBar/topNavBar";
 import BottomNavBar from "./components/bottomNavBar";
-import 'bootstrap/dist/css/bootstrap.min.css';
-
+import "bootstrap/dist/css/bootstrap.min.css";
+import {io} from "socket.io-client";
 
 function App(){
 
     const [user, setUser] = useState({});
     const [load, setLoad] = useState(false);
+    const [socket, setSocket] = useState({});
 
     async function authenticateUser(){
         try {
@@ -31,11 +32,13 @@ function App(){
     }
 
     useEffect(() => {
+        const newSocket = io('http://localhost:3001');
+        setSocket(newSocket);
         async function auth(){
             await authenticateUser();
         }
         auth();
-    }, []);
+    }, [setSocket]);
 
     if(!load){
         return <LoadePage/>;
@@ -46,7 +49,7 @@ function App(){
             <TopNavBar user={user}/>
             <Switch>
                 <Route exact path={'/verification'} render={(props)=><Welcome {...props}/>}/>
-                <Route exact path={'/profile/:username'} render={(props)=><Profile user={user} {...props}/>}/>
+                <Route exact path={'/profile/:username'} render={(props)=><Profile socket={socket} user={user} {...props}/>}/>
                 <Route path={'/settings'} render={(props)=><Settings user={user} setUser={authenticateUser} {...props}/>}/>
                 <Route exact path={'/'} render={(props)=><Home user={user} {...props}/>}/>
                 <Route render={(props)=><NotFound/>}/>
