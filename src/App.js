@@ -17,7 +17,8 @@ import {io} from "socket.io-client";
 function App(){
 
     const [user, setUser] = useState({});
-    const [load, setLoad] = useState(false);
+    const [isLoad, setLoad] = useState(false);
+    const [isLogin, setLogin] = useState(false);
     const [socket, setSocket] = useState({});
 
     async function authenticateUser(){
@@ -25,6 +26,7 @@ function App(){
             const jwt = localStorage.getItem('jwtToken');
             const user = (await authUser()).data;
             if (jwt !== null) setUser(user);
+            setLogin(true);
         } catch (ex){
             localStorage.removeItem('jwtToken');
         }
@@ -32,16 +34,20 @@ function App(){
     }
 
     useEffect(() => {
-        const newSocket = io('http://localhost:3001');
-        setSocket(newSocket);
         async function auth(){
             await authenticateUser();
+            const newSocket = io('http://localhost:3001');
+            await setSocket(newSocket);
         }
         auth();
     }, [setSocket]);
 
-    if(!load){
+    if(!isLoad){
         return <LoadePage/>;
+    }
+
+    if(isLogin && socket.emit){
+        socket.emit('new', user.username);
     }
 
     if(user.name){
