@@ -96,6 +96,7 @@ export default function Profile(props){
         }else copyOfUser.followers.push(props.user.username);
         setUserData(copyOfUser)
         followOrUnFollow({username: username});
+        props.socket.emit('follow', {username: username, isFollowed: user.followers.includes(props.user.username)?true:false});
     }
 
     const {name, username, followers, following, bio} = user;

@@ -47,7 +47,17 @@ function App(){
     }
 
     if(isLogin && socket.emit){
-        socket.emit('new', user.username);
+        socket.emit('newConnection', user.username);
+    }
+
+    if(socket.on){
+        socket.on('followed', (fUser)=>{
+            alert(`Followed by ${fUser}`);
+        })
+
+        socket.on('unFollowed', (fUser)=>{
+            alert(`UnFollowed by ${fUser}`);
+        })
     }
 
     if(user.name){
