@@ -13,20 +13,21 @@ import TopNavBar from "./components/TopNavBar/topNavBar";
 import BottomNavBar from "./components/bottomNavBar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {io} from "socket.io-client";
+import Snackbar from "./components/common/snackbar";
 
 function App(){
 
     const [user, setUser] = useState({});
     const [isLoad, setLoad] = useState(false);
-    const [isLogin, setLogin] = useState(false);
     const [socket, setSocket] = useState({});
+    const [snackMessage, setSnackMessage] = useState(null);
+
 
     async function authenticateUser(){
         try {
             const jwt = localStorage.getItem('jwtToken');
             const user = (await authUser()).data;
             if (jwt !== null) setUser(user);
-            setLogin(true);
         } catch (ex){
             localStorage.removeItem('jwtToken');
         }
@@ -36,28 +37,32 @@ function App(){
     useEffect(() => {
         async function auth(){
             await authenticateUser();
-            const newSocket = io('http://localhost:3001');
+            const newSocket = io('http://192.168.43.222:3001');
             await setSocket(newSocket);
         }
         auth();
-    }, [setSocket]);
+    }, []);
 
-    if(!isLoad){
-        return <LoadePage/>;
+    if(socket.emit&&user.username){
+        socket.emit('newConnection', user.username)
     }
 
-    if(isLogin && socket.emit){
-        socket.emit('newConnection', user.username);
+    const closeSnackMessage = ()=>{
+        setSnackMessage(null);
     }
 
     if(socket.on){
-        socket.on('followed', (fUser)=>{
-            alert(`Followed by ${fUser}`);
+        socket.off('followed').on('followed', ({username})=>{
+            setSnackMessage(`You have been followed by ${username}`);
         })
 
-        socket.on('unFollowed', (fUser)=>{
-            alert(`UnFollowed by ${fUser}`);
+        socket.off('unFollowed').on('unFollowed', ({username})=>{
+            setSnackMessage(`You have been unfollowed by ${username}`);
         })
+    }
+
+    if(!isLoad){
+        return <LoadePage/>;
     }
 
     if(user.name){
@@ -71,6 +76,7 @@ function App(){
                 <Route render={(props)=><NotFound/>}/>
             </Switch>
             <BottomNavBar user={user}/>
+            <Snackbar message={snackMessage} closeSnackMessage={closeSnackMessage}/>
         </div>;
     }
 
