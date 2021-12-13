@@ -4,7 +4,7 @@ import logo from "../images/logo.png";
 import SearchBar from "./search";
 import TopNavBarMenu from "./topNavBarMenu";
 
-export default function TopNavBar({user}) {
+export default function TopNavBar({user, notificationTrue}) {
     return (
         <AppBar position="static" sx={{backgroundColor: 'rgba(var(--d87,255,255,255),1)', marginBottom: '20px'}}>
             <Container>
@@ -21,7 +21,7 @@ export default function TopNavBar({user}) {
                         ))
                     }
                     <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', sm: 'flex', lg: 'flex' } }} />
-                    <TopNavBarMenu user={user}/>
+                    <TopNavBarMenu user={user} notificationTrue={notificationTrue}/>
                 </Toolbar>
             </Container>
         </AppBar>

@@ -3,7 +3,7 @@ import {Route, Switch } from 'react-router-dom';
 import './App.css';
 import Welcome from "./components/welcomePage/welcome";
 import ResetPassword from "./components/resetPassword";
-import {authUser} from "./services/userService";
+import {authUser, getNotificatonCount} from "./services/userService";
 import LoadePage from "./components/LoadingPage/loadePage";
 import Profile from "./components/profile";
 import Settings from "./components/Settings/settings";
@@ -21,6 +21,8 @@ function App(){
     const [isLoad, setLoad] = useState(false);
     const [socket, setSocket] = useState({});
     const [snackMessage, setSnackMessage] = useState(null);
+    const [snackTitle, setSnackTitle] = useState(null);
+    const [notificationTrue, setNotificationTrue] = useState(false);
 
 
     async function authenticateUser(){
@@ -28,6 +30,8 @@ function App(){
             const jwt = localStorage.getItem('jwtToken');
             const user = (await authUser()).data;
             if (jwt !== null) setUser(user);
+            const isNotification = (await getNotificatonCount()).data;
+            setNotificationTrue(isNotification)
         } catch (ex){
             localStorage.removeItem('jwtToken');
         }
@@ -53,10 +57,13 @@ function App(){
 
     if(socket.on){
         socket.off('followed').on('followed', ({username})=>{
+            setSnackTitle('New follower.')
             setSnackMessage(`You have been followed by ${username}`);
+            setNotificationTrue(true);
         })
 
         socket.off('unFollowed').on('unFollowed', ({username})=>{
+            setSnackTitle('UnFollowed.')
             setSnackMessage(`You have been unfollowed by ${username}`);
         })
     }
@@ -67,7 +74,7 @@ function App(){
 
     if(user.name){
         return <div>
-            <TopNavBar user={user}/>
+            <TopNavBar user={user} notificationTrue={notificationTrue}/>
             <Switch>
                 <Route exact path={'/verification'} render={(props)=><Welcome {...props}/>}/>
                 <Route exact path={'/profile/:username'} render={(props)=><Profile socket={socket} user={user} {...props}/>}/>
@@ -75,8 +82,8 @@ function App(){
                 <Route exact path={'/'} render={(props)=><Home user={user} {...props}/>}/>
                 <Route render={(props)=><NotFound/>}/>
             </Switch>
-            <BottomNavBar user={user}/>
-            <Snackbar message={snackMessage} closeSnackMessage={closeSnackMessage}/>
+            <BottomNavBar user={user} notificationTrue={notificationTrue}/>
+            <Snackbar title={snackTitle} message={snackMessage} closeSnackMessage={closeSnackMessage}/>
         </div>;
     }
 

@@ -145,7 +145,7 @@ class Form extends Component {
                 </FormControl>
             })}
             {button}
-            <SimpleSnackbar message={this.state.snackMessage} closeSnackMessage={this.closeSnackMessage}/>
+            <SimpleSnackbar severity={'error'} message={this.state.snackMessage} closeSnackMessage={this.closeSnackMessage}/>
         </div>
     }
 }

@@ -62,3 +62,7 @@ export function getUser(username){
 export function followOrUnFollow(body){
     return http.put(`${apiEndPoint}/handleFollow`, body);
 }
+
+export function getNotificatonCount(){
+    return http.get(`${apiEndPoint}/notification-count`)
+}

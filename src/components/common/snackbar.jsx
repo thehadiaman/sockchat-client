@@ -1,8 +1,8 @@
 import React from 'react';
-import {Snackbar, IconButton} from '@mui/material';
+import {Snackbar, IconButton, Alert, AlertTitle, Slide} from '@mui/material';
 import {Close} from '@mui/icons-material';
 
-export default function SimpleSnackbar({message, closeSnackMessage}) {
+export default function SimpleSnackbar({message, closeSnackMessage, severity, title}) {
 
     const handleClose = (event, reason) => {
         closeSnackMessage(null);
@@ -25,9 +25,14 @@ export default function SimpleSnackbar({message, closeSnackMessage}) {
                 open={message?true:false}
                 autoHideDuration={5000}
                 onClose={handleClose}
-                message={message}
                 action={action}
-            />
+                TransitionComponent={(props)=><Slide {...props} direction="up" />}
+            >
+                <Alert onClose={handleClose} variant="filled" severity={severity||"info"} sx={{ width: '100%' }}>
+                    {title&&<AlertTitle>{title}</AlertTitle>}
+                    {message}
+                </Alert>
+            </Snackbar>
         </div>
     );
 }
