@@ -3,11 +3,11 @@ import {Box, BottomNavigation, BottomNavigationAction, styled, Badge} from '@mui
 import {renderHomeIcon, renderMessageIcon, renderNotificationIcon, renderProfileIcon} from "../components/common/svgImages";
 import { useHistory } from "react-router-dom";
 
-function getIcon(icon, notificationTrue){
-    return <Badge variant={notificationTrue?"dot":"standard"} color="error">{icon}</Badge>
+function getIcon(icon, notificationCount){
+    return <Badge badgeContent={notificationCount} color={"error"}>{icon}</Badge>
 }
 
-export default function BottomNavBar({user, notificationTrue}) {
+export default function BottomNavBar({user, notificationCount}) {
     const [value, setValue] = React.useState(0);
     const history = useHistory();
 
@@ -29,7 +29,7 @@ export default function BottomNavBar({user, notificationTrue}) {
             >
                 <NavButton onClick={()=>history.push('/')} disableRipple icon={renderHomeIcon()} />
                     <NavButton onClick={()=>history.push('/inbox')} disableRipple icon={getIcon(renderMessageIcon())} />
-                    <NavButton onClick={()=>history.push('/notifications')} disableRipple icon={getIcon(renderNotificationIcon(), notificationTrue)} />
+                    <NavButton onClick={()=>history.push('/notifications')} disableRipple icon={getIcon(renderNotificationIcon(), notificationCount)} />
                 <NavButton onClick={()=>history.push(`/profile/${user.username}`)} disableRipple icon={renderProfileIcon()} />
 
             </BottomNavigation>

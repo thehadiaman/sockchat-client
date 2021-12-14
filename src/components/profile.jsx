@@ -88,14 +88,14 @@ export default function Profile(props){
         width: "33%"
     }));
 
-    const handleFollow = (username)=>{
+    const handleFollow = async(username)=>{
         const copyOfUser = {...user};
         if(copyOfUser.followers.includes(props.user.username)){
-            const index = copyOfUser.followers.indexOf('X')
+            const index = copyOfUser.followers.indexOf(props.user.username)
             copyOfUser.followers.splice(index);
         }else copyOfUser.followers.push(props.user.username);
         setUserData(copyOfUser)
-        followOrUnFollow({username: username});
+        await followOrUnFollow({username: username});
         props.socket.emit('follow', {username: username, isFollowed: user.followers.includes(props.user.username)?true:false});
     }
 

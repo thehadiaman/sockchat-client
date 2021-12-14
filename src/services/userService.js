@@ -4,7 +4,7 @@ const apiEndPoint = '/users';
 
 export function checkId(id){
     if(id==='') return {data: false};
-    return http.get(`${apiEndPoint}/${id}`);
+    return http.get(`${apiEndPoint}/checkId/${id}`);
 }
 
 export function signup(body){

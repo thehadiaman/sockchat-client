@@ -11,7 +11,7 @@ function logout(){
     window.location = '/';
 }
 
-export default function TopNavBarMenu({user, notificationTrue}){
+export default function TopNavBarMenu({user, notificationCount}){
 
     const history = useHistory();
     const [dropDownStatus, setDropDownStatus] = useState({
@@ -49,7 +49,7 @@ export default function TopNavBarMenu({user, notificationTrue}){
             </IconButton>
 
             <IconButton size={"medium"} onClick={({target})=>openDropDownMenu(target, notificationData, "Notifications")}>
-                <Badge variant={notificationTrue?"dot":"standard"} color="error">
+                <Badge badgeContent={notificationCount} color="error">
                     {renderNotificationIcon()}
                 </Badge>
             </IconButton>
