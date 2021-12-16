@@ -58,13 +58,13 @@ function App(){
     if(socket.on){
         socket.off('followed').on('followed', ({username, notificationCount})=>{
             setSnackTitle('New follower.');
-            setSnackMessage(`You have been followed by ${username}`);
+            setSnackMessage(`started following by ${username}`);
             setNotificationCount(notificationCount);
         })
 
         socket.off('unFollowed').on('unFollowed', ({username, notificationCount})=>{
             setSnackTitle('UnFollowed.');
-            setSnackMessage(`You have been unfollowed by ${username}`);
+            setSnackMessage(`unfollowed by ${username}`);
             setNotificationCount(notificationCount);
         })
     }

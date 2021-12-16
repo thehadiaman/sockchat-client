@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import {Button, Box, IconButton, Badge} from '@mui/material';
+import {Button, Box, IconButton, Badge, Avatar} from '@mui/material';
 import {AccountCircle} from '@mui/icons-material';
 import { useHistory } from "react-router-dom";
 import {renderHomeIcon, renderMessageIcon, renderNotificationIcon, renderSettingsIcon, renderProfileIcon, renderLogoutIcon} from "../common/svgImages";
 import Pop from "../common/popover";
 import List from "../common/list";
+import {getNotifications} from "../../services/userService";
 
 function logout(){
     localStorage.removeItem('jwtToken');
@@ -33,7 +34,24 @@ export default function TopNavBarMenu({user, notificationCount}){
         setDropDownStatus(status);
     }
 
-    const notificationData = [{text: 'Notification One'}, {text: 'Notification Two'}, {text: 'Notification Three'}, {text: 'Notification Four'}];
+    const openNotification = async(target)=>{
+        const notificationData = (await getNotifications()).data;
+
+        for(let a=0;a<notificationData.length;a++){
+            notificationData[a].text = notificationData[a].notification;
+            notificationData[a].bold = !notificationData[a].seen;
+            delete notificationData[a].notification;
+            delete notificationData[a].seen;
+            notificationData[a].icon = <Avatar/>;
+            notificationData[a].link = `/profile/${notificationData[a].username}`;
+
+        }
+
+
+        console.log(notificationData)
+        openDropDownMenu(target, notificationData, "Notifications");
+    }
+
     const profileMenuItems = [{text: 'Profile', icon: renderProfileIcon(), link: `/profile/${user.username}`}, {text: 'Settings', icon: renderSettingsIcon(), link: '/settings'}, {text: 'Logout', icon: renderLogoutIcon(), fn: logout}];
     const verificationFalseProfileMenuItems = [{text: 'Logout', icon: renderLogoutIcon(), fn: logout}];
 
@@ -48,7 +66,7 @@ export default function TopNavBarMenu({user, notificationCount}){
                 </Badge>
             </IconButton>
 
-            <IconButton size={"medium"} onClick={({target})=>openDropDownMenu(target, notificationData, "Notifications")}>
+            <IconButton size={"medium"} onClick={({target})=>openNotification(target)}>
                 <Badge badgeContent={notificationCount} color="error">
                     {renderNotificationIcon()}
                 </Badge>
@@ -59,7 +77,6 @@ export default function TopNavBarMenu({user, notificationCount}){
             </IconButton>
 
             {dropDownStatus.open&&<Pop {...dropDownStatus} closeDropDownMenu={closeDropDownMenu} />}
-
         </Box>
     );
 

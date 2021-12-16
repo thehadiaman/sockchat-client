@@ -53,3 +53,6 @@ img {
     -ms-overflow-style: none;
 }
 
+.list-text-bold{
+    font-weight: bolder;
+}

@@ -66,3 +66,7 @@ export function followOrUnFollow(body){
 export function getNotificatonCount(){
     return http.get(`${apiEndPoint}/notification-count`)
 }
+
+export function getNotifications(){
+        return http.get(`${apiEndPoint}/get-notifications`)
+}

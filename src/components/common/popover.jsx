@@ -13,9 +13,9 @@ export default function Pop({title, open, target, closeDropDownMenu, content, wi
             rootCloseEvent={'mousedown'}
             arrowProps={{style: {backgroundColor: '#000000'}}}
         >
-            <Popover style={{borderRadius: '0'}}>
+            <Popover style={{borderRadius: '0', width: width||"max-content", height: height||"max-content"}}>
                 {title&&<Popover.Header as={"h6"} className={"popover-title"}>{title}</Popover.Header>}
-                <div onClick={closeDropDownMenu} style={{overflow: scroll||'hidden', height: height||"max-contend", width: width||"max-contend", overflowX: 'hidden'}}>
+                <div onClick={closeDropDownMenu} style={{overflow: scroll||'hidden', overflowX: 'hidden'}}>
                     {content}
                 </div>
             </Popover>

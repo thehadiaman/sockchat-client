@@ -32,7 +32,7 @@ export default function List({list}){
                                     {m.icon}
                                 </ListItemIcon>
                             )}
-                            <ListItemText primary={m.text} />
+                            <ListItemText><span className={m.bold?'list-text-bold':''}>{m.text}</span></ListItemText>
                         </ListButton>
                     <Divider/>
                 </div>
