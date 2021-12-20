@@ -5,6 +5,7 @@ import {Route, useHistory} from 'react-router-dom';
 import ProfileSettings from "./profileSettings";
 import PasswordSettings from "./passwordSettings";
 import DeleteAccountSettings from "./deleteAccountSettings";
+import {renderSettingsGear} from "../common/svgImages";
 
 function logout(){
     localStorage.removeItem('jwtToken');
@@ -57,7 +58,12 @@ export default function Settings({user, setUser}){
                     <Route exact path={'/settings/delete'} render={(props)=><DeleteAccountSettings user={user} setUser={setUser} {...props}/>}/>
                     {
                         (history.location.pathname==='/settings')&&(size.width>=900)&&(
-                            <Route exact path={'/settings'} render={(props)=><div>SETTINGS</div>}/>
+                            <Route exact path={'/settings'}>
+                                <center>
+                                    {renderSettingsGear()}
+                                    <h1>Settings</h1>
+                                </center>
+                            </Route>
                         )
                     }
                 </Container>

@@ -9,7 +9,7 @@ import {scheduleAccountDelete, cancelAccountDelete} from "../../services/userSer
 class PasswordSettings extends Form {
 
     state={
-        inputs:[{name: 'password', type: 'password', value: '', label: "Password", error: "", btnDisabled: true, helper: "Enter your password and conform your identity"}],
+        inputs:[{name: 'password', type: 'password', value: '', label: "Password", error: "", btnDisabled: true, helper: "Enter your password to conform your identity"}],
         snackMessage: null,
         loadingBtn: false
     }
