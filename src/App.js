@@ -48,7 +48,7 @@ function App(){
     }, []);
 
     if(socket.emit&&user.username){
-        socket.emit('newConnection', user.username)
+        socket.emit('newConnection', user._id)
     }
 
     const closeSnackMessage = ()=>{
@@ -75,7 +75,7 @@ function App(){
 
     if(user.name){
         return <div>
-            <TopNavBar user={user} notificationCount={notificationCount}/>
+            <TopNavBar user={user} notificationCount={notificationCount} setNotificationCount={setNotificationCount}/>
             <Switch>
                 <Route exact path={'/verification'} render={(props)=><Welcome {...props}/>}/>
                 <Route exact path={'/profile/:username'} render={(props)=><Profile socket={socket} user={user} {...props}/>}/>

@@ -70,3 +70,7 @@ export function getNotificatonCount(){
 export function getNotifications(){
         return http.get(`${apiEndPoint}/get-notifications`)
 }
+
+export function seeNotifications(){
+    return http.put(`${apiEndPoint}/notification-seen`);
+}

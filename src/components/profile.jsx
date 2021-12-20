@@ -88,15 +88,15 @@ export default function Profile(props){
         width: "33%"
     }));
 
-    const handleFollow = async(username)=>{
+    const handleFollow = async()=>{
         const copyOfUser = {...user};
-        if(copyOfUser.followers.includes(props.user.username)){
-            const index = copyOfUser.followers.indexOf(props.user.username)
+        if(copyOfUser.followers.includes(props.user._id)){
+            const index = copyOfUser.followers.indexOf(props.user._id)
             copyOfUser.followers.splice(index);
-        }else copyOfUser.followers.push(props.user.username);
+        }else copyOfUser.followers.push(props.user._id);
         setUserData(copyOfUser)
-        await followOrUnFollow({username: username});
-        props.socket.emit('follow', {username: username, isFollowed: user.followers.includes(props.user.username)?true:false});
+        await followOrUnFollow({_id: user._id});
+        props.socket.emit('follow', {userId: user._id, isFollowed: user.followers.includes(props.user._id)?true:false});
     }
 
     const {name, username, followers, following, bio} = user;
@@ -109,7 +109,7 @@ export default function Profile(props){
             <ProfileImage/>
             <span style={userNameStyle}>{username}
                 {username===props.user.username?<PopupList list={profileMenuitems} LaunchButton={renderSettingsIcon()}/>:
-                    <Button onClick={()=>handleFollow(username)} style={{size: '20px', marginLeft: '10px', padding: '5px 20px 5px 20px'}} variant={'contained'}>{user.followers.includes(props.user.username)?'unfollow':'follow'}</Button>}
+                    <Button onClick={handleFollow} style={{size: '20px', marginLeft: '10px', padding: '5px 20px 5px 20px'}} variant={'contained'}>{user.followers.includes(props.user._id)?'unfollow':'follow'}</Button>}
                 <br/>
                 {name}
             </span>

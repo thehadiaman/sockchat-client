@@ -2,30 +2,31 @@ import React, {useState} from 'react';
 import {Button, Box, IconButton, Badge, Avatar} from '@mui/material';
 import {AccountCircle} from '@mui/icons-material';
 import { useHistory } from "react-router-dom";
-import {renderHomeIcon, renderMessageIcon, renderNotificationIcon, renderSettingsIcon, renderProfileIcon, renderLogoutIcon} from "../common/svgImages";
+import {renderHomeIcon, renderMessageIcon, renderNotificationIcon, renderSettingsIcon, renderProfileIcon, renderLogoutIcon, renderNoNotifications} from "../common/svgImages";
 import Pop from "../common/popover";
 import List from "../common/list";
-import {getNotifications} from "../../services/userService";
+import {getNotifications, seeNotifications} from "../../services/userService";
 
 function logout(){
     localStorage.removeItem('jwtToken');
     window.location = '/';
 }
 
-export default function TopNavBarMenu({user, notificationCount}){
+export default function TopNavBarMenu({user, notificationCount, setNotificationCount}){
 
     const history = useHistory();
     const [dropDownStatus, setDropDownStatus] = useState({
         open: false,
         target: null,
         content: null,
-        title: null
+        title: null,
+        css: ""
     });
 
-    const openDropDownMenu = (target=null, menu=[], title=null)=>{
+    const openDropDownMenu = (target=null, menu=[], title=null, css="")=>{
         const content = <List list={menu}/>
         const open = true;
-        const status = {open, target, content, title};
+        const status = {open, target, content, title, css};
         setDropDownStatus(status);
     }
 
@@ -36,20 +37,22 @@ export default function TopNavBarMenu({user, notificationCount}){
 
     const openNotification = async(target)=>{
         const notificationData = (await getNotifications()).data;
-
-        for(let a=0;a<notificationData.length;a++){
-            notificationData[a].text = notificationData[a].notification;
-            notificationData[a].bold = !notificationData[a].seen;
-            delete notificationData[a].notification;
-            delete notificationData[a].seen;
-            notificationData[a].icon = <Avatar/>;
-            notificationData[a].link = `/profile/${notificationData[a].username}`;
-
+        if(notificationData.length!==0){
+            for(let a=0;a<notificationData.length;a++){
+                notificationData[a].text = notificationData[a].notification;
+                notificationData[a].bold = !notificationData[a].seen;
+                notificationData[a].link = `/profile/${notificationData[a].cause}`;
+                notificationData[a].icon = <Avatar/>;
+                delete notificationData[a].notification;
+                delete notificationData[a].seen;
+                delete notificationData[a].cause;
+            }
+            openDropDownMenu(target, notificationData, "Notifications");
+            seeNotifications();
+            setNotificationCount(0);
+        }else{
+            openDropDownMenu(target, [{text: 'No notifications', icon: renderNoNotifications()}], "Notifications", "overflow-hidden-class");
         }
-
-
-        console.log(notificationData)
-        openDropDownMenu(target, notificationData, "Notifications");
     }
 
     const profileMenuItems = [{text: 'Profile', icon: renderProfileIcon(), link: `/profile/${user.username}`}, {text: 'Settings', icon: renderSettingsIcon(), link: '/settings'}, {text: 'Logout', icon: renderLogoutIcon(), fn: logout}];
@@ -72,7 +75,7 @@ export default function TopNavBarMenu({user, notificationCount}){
                 </Badge>
             </IconButton>
 
-            <IconButton size={"medium"} onClick={({target})=>openDropDownMenu(target, profileMenuItems)}>
+            <IconButton size={"medium"} onClick={({target})=>openDropDownMenu(target, profileMenuItems, null, "overflow-hidden-class")}>
                 <AccountCircle sx={{fontSize: 'larger'}}/>
             </IconButton>
 
@@ -82,7 +85,7 @@ export default function TopNavBarMenu({user, notificationCount}){
 
     const userLoginTrueVerificationFalseMenu = (
         <Box sx={{position: 'absolute', right: '-10px' }}>
-            <IconButton onClick={({target})=>openDropDownMenu(target, verificationFalseProfileMenuItems)}>
+            <IconButton onClick={({target})=>openDropDownMenu(target, verificationFalseProfileMenuItems, null, "overflow-hidden-class")}>
                 <AccountCircle sx={{fontSize: 'larger'}}/>
             </IconButton>
             {dropDownStatus.open&&<Pop {...dropDownStatus} closeDropDownMenu={closeDropDownMenu} />}
