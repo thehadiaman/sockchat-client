@@ -63,7 +63,7 @@ export default function TopNavBarMenu({user, notificationCount, setNotificationC
             <IconButton onClick={()=>history.push('/')}>
                 {renderHomeIcon()}
             </IconButton>
-            <IconButton>
+            <IconButton onClick={()=>history.push('/inbox')}>
                 <Badge badgeContent={10} color="error">
                     {renderMessageIcon()}
                 </Badge>

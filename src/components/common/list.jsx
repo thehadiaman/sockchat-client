@@ -1,5 +1,5 @@
 import React from "react";
-import { List as TheList, ListItemButton, ListItemIcon, ListItemText, styled, Divider } from '@mui/material';
+import { List as TheList, ListItemButton, ListItemIcon, ListItemText, styled, Divider, Badge } from '@mui/material';
 import { useHistory } from "react-router-dom";
 
 export default function List({list}){
@@ -32,7 +32,8 @@ export default function List({list}){
                                     {m.icon}
                                 </ListItemIcon>
                             )}
-                            <ListItemText><span className={m.bold?'list-text-bold':''}>{m.text}</span></ListItemText>
+                            <ListItemText secondary={m.lastMessage||null}><span className={m.bold?'list-text-bold':''}>{m.text}</span></ListItemText>
+                            {m.newMessage&&<Badge color="error" badgeContent="1"/>}
                         </ListButton>
                     <Divider/>
                 </div>

@@ -14,6 +14,7 @@ import BottomNavBar from "./components/bottomNavBar";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {io} from "socket.io-client";
 import Snackbar from "./components/common/snackbar";
+import Inbox from "./components/Inbox/inbox";
 
 function App(){
 
@@ -80,6 +81,7 @@ function App(){
                 <Route exact path={'/verification'} render={(props)=><Welcome {...props}/>}/>
                 <Route exact path={'/profile/:username'} render={(props)=><Profile socket={socket} user={user} {...props}/>}/>
                 <Route path={'/settings'} render={(props)=><Settings user={user} setUser={authenticateUser} {...props}/>}/>
+                <Route path={'/inbox'} render={(props)=><Inbox user={user} {...props}/>}/>
                 <Route exact path={'/'} render={(props)=><Home user={user} {...props}/>}/>
                 <Route render={(props)=><NotFound/>}/>
             </Switch>
