@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import {Container, Grid, Avatar, AppBar, IconButton, Button, Toolbar, Box, Divider} from "@mui/material";
 import {Add as AddIcon} from '@mui/icons-material';
 import List from "../common/list";
@@ -21,11 +21,10 @@ export default function Inbox({user}){
 
     return (<Container style={size.width<900?{paddingLeft: "0", paddingRight: "0"}:{}}>
         <Container style={size.width<900?{paddingLeft: "0", paddingRight: "0"}:{}}>
-        {(size.width >= 900 || (history.location.pathname === '/inbox')) && (<h1>Inbox</h1>)}
         <Grid container columns={{xs: 12, sm: 12, md: 12, lg: 12}}>
             {(size.width>=900||(history.location.pathname==='/inbox'))&&(
                 <Grid item xs={12} dm={12} md={4} lg={4} style={{border: '1px solid #dddddd'}}>
-                    <AppBar position="static" sx={{backgroundColor: '#fff'}}>
+                    <AppBar position="static" sx={{backgroundColor: '#fff', padding: '10px', boxShadow: 'none'}}>
                         <Toolbar>
                             <Button>Followers</Button>
                             <Box sx={{ flexGrow: 1 }}/>

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import { ChatFeed } from 'react-chat-ui'
 import { Container } from "@mui/material";
 
@@ -9,6 +9,7 @@ export default function ChatBox({messages, typing}){
             <ChatFeed
                 messages={messages}
                 isTyping={typing}
+                typingText={<p>HELLO</p>}
                 hasInputField={false}
                 bubblesCentered={false}
                 bubbleStyles={
@@ -17,7 +18,7 @@ export default function ChatBox({messages, typing}){
                             background: '#dddddd',
                             padding: 10,
                             width: 'max-content',
-                            maxWidth: '60%',
+                            maxWidth: '70%',
                             overflowWrap: 'break-word',
                         },
                         chatbubble: {
@@ -25,7 +26,7 @@ export default function ChatBox({messages, typing}){
                             border: '1px solid #dddddd',
                             padding: 10,
                             width: 'max-content',
-                            maxWidth: '60%',
+                            maxWidth: '70%',
                             overflowWrap: 'break-word',
                         },
                         text: {

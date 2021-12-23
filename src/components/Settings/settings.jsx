@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React from "react";
 import {Container, Grid} from "@mui/material";
 import List from "../common/list";
 import {Route, useHistory} from 'react-router-dom';
@@ -26,7 +26,6 @@ export default function Settings({user, setUser}){
     document.title = "Account Settings";
 
     return (<Container>
-        {(size.width >= 900 || (history.location.pathname === '/settings')) && (<h1>Settings</h1>)}
         <Grid container columns={{xs: 12, sm: 12, md: 12, lg: 12}}>
             {(size.width>=900||(history.location.pathname==='/settings'))&&(
                 <Grid item xs={12} dm={12} md={3} lg={3} style={{border: '1px solid #dddddd'}}>

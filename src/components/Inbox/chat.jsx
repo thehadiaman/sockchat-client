@@ -16,7 +16,7 @@ export default function Chat({user, match}){
 
     useEffect(()=>{
         getInitialMessages();
-    }, [])
+    })
 
     async function getInitialMessages(){
         await setMessages([
@@ -57,10 +57,13 @@ export default function Chat({user, match}){
                 message: "I'm you -- the blue bubble!" }),
             new Message({
                 id: 0,
-                message: <div><img className={"chat-img"} src={"https://picsum.photos/500"}  alt={"IMAGE"} />Messages</div> }),
+                message: <span><img className={"chat-img"} src={"https://picsum.photos/500"}  alt={"..."} />Messages</span> }),
             new Message({
                 id: 1,
-                message: <div><img className={"chat-img"} src={"https://picsum.photos/502"} height={'max-height'} alt={"IMAGE"} />HELLo</div> }),
+                message: <span><img className={"chat-img"} src={"https://picsum.photos/100/20"} height={'max-height'} alt={"..."} />HELLo</span> }),
+            new Message({
+                id: 1,
+                message: <span><img className={"chat-img"} src={"https://picsum.photos/800/200"} height={'max-height'} alt={"..."} />HELLo</span> }),
         ]);
         scrollElement('main-chat-container');
     }
@@ -88,14 +91,14 @@ export default function Chat({user, match}){
     }
 
     return <div>
-        <AppBar position={size.width>900?"static":"fixed"}  sx={{backgroundColor: '#fff', padding: "10px"}}>
+        <AppBar position={size.width>900?"static":"fixed"} sx={{backgroundColor: '#fff', padding: "10px", boxShadow: 'none', borderBottom: '1px solid #dddddd'}}>
             <Toolbar>
                 <Avatar className={"cursor-pointer"} onClick={()=>history.push('/profile/hadiaman')}/> <span className={"cursor-pointer"} onClick={()=>history.push('/profile/hadiaman')} style={{color: 'black', marginLeft: "5px"}}>hadiaman</span>
                 <Box sx={{ flexGrow: 1 }}/>
                 {size.width<900&&<IconButton edge={"end"} onClick={()=>history.replace('/inbox')}><ArrowBackIosIcon fontSize={"large"}/></IconButton>}
             </Toolbar>
         </AppBar>
-        <div className="main-chat-container"><ChatBox messages={messages} user={user} typing={typing} /></div>
+        <div className="main-chat-container" style={size.width>900?{}:{marginBottom: "45px"}} ><ChatBox messages={messages} user={user} typing={typing} /></div>
         <ChatInput value={message} handleMessageSubmit={handleMessageSubmit} handleChange={handleChange}/>
     </div>
 }
