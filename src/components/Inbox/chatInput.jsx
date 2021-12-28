@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useRef} from "react";
 import {IconButton, InputBase, AppBar, Toolbar} from "@mui/material"
 import {EmojiEmotions as EmojiEmotionsIcon, AddPhotoAlternate as AddPhotoAlternateIcon, Send as SendIcon} from '@mui/icons-material';
 import { useWindowSize } from "../common/windowSize";
@@ -6,11 +6,12 @@ import 'emoji-mart/css/emoji-mart.css';
 import { Picker } from 'emoji-mart'
 import Pop from "../common/popover";
 
-export default function ChatInput({handleMessageSubmit, handleChange, value, addEmoji}){
+export default function ChatInput({handleMessageSubmit, handleChange, value, addEmoji, setImageMessage, isImageMessage, setImage}){
 
     const size = useWindowSize();
     const [emojiOpen, setEmojiOpen] = useState(false);
     const [emojiPickerTarget, setEmojiPickerTarget] = useState(null);
+    const image = useRef(null);
 
     function openEmojiPicker(target){
         setEmojiOpen(true);
@@ -20,6 +21,18 @@ export default function ChatInput({handleMessageSubmit, handleChange, value, add
     function closeEmojiPicker(){
         setEmojiOpen(false);
         setEmojiPickerTarget(null);
+    }
+
+    function handleAddImageButtnn(){
+        image.current.click();
+    }
+
+    async function handleChangeImageInput(e){
+        if(e.target.files.length>0){
+            await setImageMessage(true);
+            const src = URL.createObjectURL(e.target.files[0]);
+            setImage(src);
+        }
     }
 
     const emojiContent = <Picker
@@ -45,15 +58,18 @@ export default function ChatInput({handleMessageSubmit, handleChange, value, add
             <InputBase
                 autoFocus onKeyPress={handleMessageSubmit} value={value} className={'chat-input'} onChange={({target})=>handleChange(target)}
             />
-            <IconButton sx={{ p: '10px' }}>
-                <AddPhotoAlternateIcon />
+            <IconButton sx={{ p: '10px' }} onClick={handleAddImageButtnn}>
+                {
+                    isImageMessage? <img src={image} alt="chat"/>:<AddPhotoAlternateIcon />
+                }
             </IconButton>
             {
-                value.trim()!==''&&<IconButton onClick={()=>handleMessageSubmit({key: 'Enter'})} sx={{ p: '10px' }} aria-label="directions">
+                (value.trim()!==''||isImageMessage)&&<IconButton onClick={()=>handleMessageSubmit({key: 'Enter'})} sx={{ p: '10px' }} aria-label="directions">
                     <SendIcon />
                 </IconButton>
             }
             {emojiOpen&&<Pop open={emojiOpen} target={emojiPickerTarget} closeDropDownMenu={closeEmojiPicker} content={emojiContent} closeOnCLick={true} placement={"top"} scroll={'none'}/>}
         </Toolbar>
+        <input type={"file"} style={{display: 'none'}} ref={image} onChange={handleChangeImageInput} alt={"input-image"} />
     </AppBar>
 }

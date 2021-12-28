@@ -42,7 +42,7 @@ function App(){
     useEffect(() => {
         async function auth(){
             await authenticateUser();
-            const newSocket = io('http://192.168.43.222:3001');
+            const newSocket = io('http://localhost:3001');
             await setSocket(newSocket);
         }
         auth();

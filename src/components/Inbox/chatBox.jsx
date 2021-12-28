@@ -9,7 +9,7 @@ export default function ChatBox({messages, typing}){
             <ChatFeed
                 messages={messages}
                 isTyping={typing}
-                typingText={<p>HELLO</p>}
+                typingText={<p>Typing...</p>}
                 hasInputField={false}
                 bubblesCentered={false}
                 bubbleStyles={

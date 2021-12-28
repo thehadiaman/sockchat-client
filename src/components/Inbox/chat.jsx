@@ -13,6 +13,8 @@ export default function Chat({user, match}){
     const size = useWindowSize();
     const [message, setMessage] = useState('');
     const [typing, setTyping] = useState(false);
+    const [isImageMessage, setImageMessage] = useState(false);
+    const [image, setImage] = useState(false);
 
     useEffect(()=>{
         async function setup(){
@@ -76,14 +78,28 @@ export default function Chat({user, match}){
     }
 
     async function handleMessageSubmit({key}){
-        if(!(key==='Enter' && message.trim()!=='')) return;
-        setMessage('');
-        const copy_of_messages = [...messages];
-        const new_message = new Message({
-            id: 0,
-            message
-        });
-        copy_of_messages.push(new_message);
+        let copy_of_messages = [];
+        if(isImageMessage){
+            if(!(key==='Enter')) return;
+            setMessage('');
+            copy_of_messages = [...messages];
+            const new_message = new Message(
+                {
+                    id: 0,
+                    message: <span><img className={"chat-img"} src={image}  alt={"..."} />{message}</span> }
+            );
+            copy_of_messages.push(new_message);
+            setImageMessage(false);
+        }else{
+            if(!(key==='Enter' && message.trim()!=='')) return;
+            setMessage('');
+            copy_of_messages = [...messages];
+            const new_message = new Message({
+                id: 0,
+                message
+            });
+            copy_of_messages.push(new_message);
+        }
         await setMessages(copy_of_messages);
         scrollElement('main-chat-container');
     }
@@ -102,7 +118,7 @@ export default function Chat({user, match}){
             </Toolbar>
         </AppBar>
         <div className="main-chat-container" style={size.width>900?{}:{marginBottom: "45px"}} ><ChatBox messages={messages} user={user} typing={typing} /></div>
-        <ChatInput addEmoji={addEmoji} value={message} handleMessageSubmit={handleMessageSubmit} handleChange={handleChange}/>
+        <ChatInput setImage={setImage} addEmoji={addEmoji} isImageMessage={isImageMessage} value={message} setImageMessage={setImageMessage} handleMessageSubmit={handleMessageSubmit} handleChange={handleChange}/>
 
     </div>
 }
