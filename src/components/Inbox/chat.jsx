@@ -118,7 +118,7 @@ export default function Chat({user, match}){
             </Toolbar>
         </AppBar>
         <div className="main-chat-container" style={size.width>900?{}:{marginBottom: "45px"}} ><ChatBox messages={messages} user={user} typing={typing} /></div>
-        <ChatInput setImage={setImage} addEmoji={addEmoji} isImageMessage={isImageMessage} value={message} setImageMessage={setImageMessage} handleMessageSubmit={handleMessageSubmit} handleChange={handleChange}/>
+        <ChatInput image={image} setImage={setImage} addEmoji={addEmoji} isImageMessage={isImageMessage} value={message} setImageMessage={setImageMessage} handleMessageSubmit={handleMessageSubmit} handleChange={handleChange}/>
 
     </div>
 }

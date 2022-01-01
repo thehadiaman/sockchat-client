@@ -6,12 +6,12 @@ import 'emoji-mart/css/emoji-mart.css';
 import { Picker } from 'emoji-mart'
 import Pop from "../common/popover";
 
-export default function ChatInput({handleMessageSubmit, handleChange, value, addEmoji, setImageMessage, isImageMessage, setImage}){
+export default function ChatInput({handleMessageSubmit, handleChange, value, addEmoji, setImageMessage, isImageMessage, setImage, image}){
 
     const size = useWindowSize();
     const [emojiOpen, setEmojiOpen] = useState(false);
     const [emojiPickerTarget, setEmojiPickerTarget] = useState(null);
-    const image = useRef(null);
+    const imageInputRef = useRef(null);
 
     function openEmojiPicker(target){
         setEmojiOpen(true);
@@ -24,7 +24,7 @@ export default function ChatInput({handleMessageSubmit, handleChange, value, add
     }
 
     function handleAddImageButtnn(){
-        image.current.click();
+        imageInputRef.current.click();
     }
 
     async function handleChangeImageInput(e){
@@ -60,7 +60,7 @@ export default function ChatInput({handleMessageSubmit, handleChange, value, add
             />
             <IconButton sx={{ p: '10px' }} onClick={handleAddImageButtnn}>
                 {
-                    isImageMessage? <img src={image} alt="chat"/>:<AddPhotoAlternateIcon />
+                    isImageMessage? <img height={"30px"} src={image} alt="chat"/>:<AddPhotoAlternateIcon />
                 }
             </IconButton>
             {
@@ -70,6 +70,6 @@ export default function ChatInput({handleMessageSubmit, handleChange, value, add
             }
             {emojiOpen&&<Pop open={emojiOpen} target={emojiPickerTarget} closeDropDownMenu={closeEmojiPicker} content={emojiContent} closeOnCLick={true} placement={"top"} scroll={'none'}/>}
         </Toolbar>
-        <input type={"file"} style={{display: 'none'}} ref={image} onChange={handleChangeImageInput} alt={"input-image"} />
+        <input type={"file"} style={{display: 'none'}} ref={imageInputRef} onChange={handleChangeImageInput} alt={"input-image"} />
     </AppBar>
 }

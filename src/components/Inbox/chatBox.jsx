@@ -8,8 +8,8 @@ export default function ChatBox({messages, typing}){
         <Container>
             <ChatFeed
                 messages={messages}
-                isTyping={typing}
-                typingText={<p>Typing...</p>}
+                isTyping={true}
+                typingText={"Typing..."}
                 hasInputField={false}
                 bubblesCentered={false}
                 bubbleStyles={

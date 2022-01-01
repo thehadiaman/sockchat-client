@@ -23,7 +23,7 @@ export default function StatusBar({user}) {
     }));
 
     return (
-        <Card sx={{ width: {lg: "45%", md: "45%", }, marginLeft: {lg: "150px", md: "150px"}, border: '1px solid #dddddd', boxShadow: 'none', padding: "0 10px 0 10px" }}>
+        <Card sx={{ mb: "10px", border: '1px solid #dddddd', boxShadow: 'none', padding: "0 10px 0 10px", width: {lg: '60%'}}}>
             <CardContent style={{paddingLeft: "0", paddingRight: "0"}}>
                 <div className={'status-container'}>
                     <div>
